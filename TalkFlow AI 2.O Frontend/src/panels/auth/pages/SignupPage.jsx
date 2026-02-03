@@ -1,19 +1,17 @@
-import SignupNavbar from "../components/SignupNavbar";
-import SignupCard from "../components/SignupCard";
-import BenefitsSection from "../components/BenefitsSection";
-import TrustedLogos from "../components/TrustedLogos";
+import AuthLayout from "../components/AuthLayout"
+import AuthHero from "../components/AuthHero"
+import SigninForm from "../components/SigninForm"
 
-export default function SignupPage() {
+export default function Signup() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <SignupNavbar />
-
-      <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-10 items-center">
-        <BenefitsSection />
-        <SignupCard />
+    <AuthLayout>
+      <AuthHero
+        gradientFrom="#7e22ce" // purple-700
+        gradientTo="#831843"   // pink-900
+      />
+      <div className="flex items-center justify-center px-6">
+        <SigninForm />
       </div>
-
-      <TrustedLogos />
-    </div>
-  );
+    </AuthLayout>
+  )
 }
