@@ -5,8 +5,8 @@ export default function STTPanel() {
   const { transcript } = useAICall();
 
   return (
-    <div className="bg-white border rounded-2xl p-5">
-      <p className="text-blue-600 text-sm flex items-center gap-2">
+    <div className="bg-white border-gray-500 rounded-xl p-5 shadow-xl">
+      <p className="text-blue-600 text-sm flex items-center gap-2 font-bold">
         <Mic size={16} /> STEP 1: SPEECH-TO-TEXT
       </p>
 

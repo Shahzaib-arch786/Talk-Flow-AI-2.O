@@ -2,8 +2,8 @@ import { Volume2, Play } from "lucide-react";
 
 export default function TTSPanel() {
   return (
-    <div className="bg-white border rounded-2xl p-5">
-      <p className="text-blue-600 text-sm flex items-center gap-2">
+    <div className="bg-white border-gray-400 rounded-xl p-5 shadow-xl">
+      <p className="text-blue-600 text-sm flex items-center gap-2 font-bold">
         <Volume2 size={16} /> STEP 3: TEXT-TO-SPEECH
       </p>
 

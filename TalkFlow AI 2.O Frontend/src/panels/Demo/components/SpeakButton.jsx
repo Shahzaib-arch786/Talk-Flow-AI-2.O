@@ -10,7 +10,7 @@ export default function SpeakButton() {
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={toggleListening}
-        className="w-28 h-28 rounded-full bg-blue-700 text-white flex flex-col items-center justify-center shadow-xl"
+        className="w-28 h-28 rounded-full bg-blue-700 text-white flex flex-col items-center justify-center shadow-xl p-6 cursor-pointer"
       >
         <Mic size={28} />
         <span className="text-xs mt-1">

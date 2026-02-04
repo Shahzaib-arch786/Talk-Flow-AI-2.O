@@ -5,8 +5,8 @@ export default function NLPPanel() {
   const { intent, entity, category, score } = useAICall();
 
   return (
-    <div className="bg-white border rounded-2xl p-5">
-      <p className="text-blue-600 text-sm flex items-center gap-2">
+    <div className="bg-white border-gray-400 rounded-xl p-5 shadow-xl">
+      <p className="text-blue-600 text-sm flex items-center gap-2 font-bold">
         <Brain size={16} /> STEP 2: NATURAL LANGUAGE PROCESSING
       </p>
 

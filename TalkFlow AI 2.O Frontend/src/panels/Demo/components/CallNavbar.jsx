@@ -6,7 +6,7 @@ export default function CallNavbar() {
     <motion.nav
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white border-b"
+      className="bg-white border-b-gray-400 shadow-md sticky top-0 z-10"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
@@ -24,7 +24,7 @@ export default function CallNavbar() {
 
         {/* RIGHT ACTION */}
         <div>
-          <button className="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 transition px-3 py-2 rounded-xl text-blue-700 text-sm">
+          <button className="flex items-center gap-2 bg-blue-700 hover:bg-blue-600 transition px-3 py-2 rounded-md text-white text-sm font-medium">
             <Settings size={16} />
             Settings
           </button>

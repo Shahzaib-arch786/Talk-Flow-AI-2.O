@@ -7,7 +7,7 @@ import FooterNote from "../components/FooterNote";
 
 export default function AICallPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       <CallNavbar />
 
       <div className="max-w-7xl mx-auto px-6 py-10">
