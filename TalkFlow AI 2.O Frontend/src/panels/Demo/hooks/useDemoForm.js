@@ -16,7 +16,9 @@ export default function useDemoForm() {
   };
 
   const handleSubmit = () => {
+    
     console.log("Demo Form Data:", form);
+    
     // later connect with backend / call flow
   };
 

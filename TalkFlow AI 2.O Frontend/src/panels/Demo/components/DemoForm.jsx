@@ -9,7 +9,7 @@ export default function DemoForm() {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white max-w-[95%] rounded-2xl shadow-xl p-8 border"
+      className="bg-white max-w-[95%] rounded-xl shadow-2xl p-8 border border-gray-200 md:max-w-md lg:max-w-lg mb-10 mx-auto"
     >
       <h2 className="text-2xl font-bold text-center">
         Try TalkFlow AI
@@ -30,7 +30,7 @@ export default function DemoForm() {
             value={form.name}
             onChange={handleChange}
             placeholder="Jane Doe"
-            className="w-full pl-10 p-3 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full pl-10 p-3 bg-gray-50 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
       </div>
@@ -46,7 +46,7 @@ export default function DemoForm() {
             value={form.email}
             onChange={handleChange}
             placeholder="jane@company.com"
-            className="w-full pl-10 p-3 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full pl-10 p-3 bg-gray-50 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function DemoForm() {
 
           <button
             onClick={() => setLanguage("English")}
-            className={`flex items-center justify-center gap-2 p-3 rounded-xl border ${
+            className={`flex items-center justify-center gap-2 p-3 rounded-md border ${
               form.language === "English"
                 ? "border-blue-600 text-blue-600"
                 : "bg-gray-50"
@@ -71,7 +71,7 @@ export default function DemoForm() {
 
           <button
             onClick={() => setLanguage("Urdu")}
-            className={`flex items-center justify-center gap-2 p-3 rounded-xl border ${
+            className={`flex items-center justify-center gap-2 p-3 rounded-md border ${
               form.language === "Urdu"
                 ? "border-blue-600 text-blue-600"
                 : "bg-gray-50"
@@ -88,7 +88,7 @@ export default function DemoForm() {
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={handleSubmit}
-        className="w-full mt-6 bg-blue-600 text-white p-3 rounded-xl flex items-center justify-center gap-2"
+        className="w-full mt-6 bg-blue-600 text-white p-3 rounded-md flex items-center justify-center gap-2"
       >
         <Phone size={18} />
         Start AI Call Demo

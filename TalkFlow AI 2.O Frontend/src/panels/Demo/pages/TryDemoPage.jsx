@@ -14,7 +14,7 @@ export default function TryDemoPage() {
       <TrustedBy />
 
       <div className="text-center text-sm text-gray-500 pb-6">
-        © 2024 TalkFlow AI Inc. All rights reserved.
+        © 2026 TalkFlow AI Inc. All rights reserved.
       </div>
     </div>
   );
