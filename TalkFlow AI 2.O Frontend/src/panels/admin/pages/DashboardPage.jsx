@@ -5,16 +5,18 @@ import IntentsCard from "../components/IntentsCard";
 import RecentCallsTable from "../components/RecentCallsTable";
 import { motion } from "framer-motion";
 import { useDashboard } from "../hooks/useDashboard";
+import { useState } from "react";
 
 export default function DashboardPage() {
   const { stats, intents, calls } = useDashboard();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex bg-gray-50 min-h-screen">
-      <Sidebar />
+    <div className="flex bg-gray-100 min-h-screen">
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex-1">
-        <Topbar />
+        <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
         <div className="p-6 space-y-6">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

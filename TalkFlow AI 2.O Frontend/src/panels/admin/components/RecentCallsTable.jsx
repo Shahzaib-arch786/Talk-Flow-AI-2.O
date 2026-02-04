@@ -1,6 +1,6 @@
 export default function RecentCallsTable({ data }) {
   return (
-    <div className="bg-white p-4 rounded-2xl border">
+    <div className="bg-white p-4 rounded-lg border-gray-200 border shadow-sm cursor-pointer">
       <div className="flex justify-between mb-4">
         <h3 className="font-semibold">Recent Call Activity</h3>
         <span className="text-blue-600 text-sm">View All</span>

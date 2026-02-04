@@ -4,7 +4,7 @@ export default function StatCard({ icon: Icon, title, value, tag }) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="bg-white p-4 rounded-2xl border"
+      className="bg-white p-6 rounded-lg border-gray-200 border shadow-sm cursor-pointer"
     >
       <div className="flex justify-between">
         <div className="p-2 bg-blue-50 rounded-lg">

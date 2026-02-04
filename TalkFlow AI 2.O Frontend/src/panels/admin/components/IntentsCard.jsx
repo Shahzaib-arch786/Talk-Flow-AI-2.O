@@ -1,6 +1,6 @@
 export default function IntentsCard({ data }) {
   return (
-    <div className="bg-white p-4 rounded-2xl border">
+    <div className="bg-white p-4 rounded-lg border-gray-200 border shadow-sm cursor-pointer">
       <h3 className="font-semibold mb-4">Top Detected Intents</h3>
 
       <div className="space-y-3">

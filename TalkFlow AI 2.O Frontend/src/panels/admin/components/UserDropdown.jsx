@@ -18,7 +18,7 @@ export default function UserDropdown({ open, onClose }) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="absolute right-0 mt-3 w-48 bg-white border rounded-xl shadow-lg z-50"
+          className="absolute right-0 mt-3 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
         >
           <button
             onClick={() => navigate("/admin/profile")}
