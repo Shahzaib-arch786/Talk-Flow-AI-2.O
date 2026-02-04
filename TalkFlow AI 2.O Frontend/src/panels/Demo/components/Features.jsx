@@ -4,7 +4,7 @@ const features = [
   {
     icon: Activity,
     title: "Real-time Understanding",
-    desc: "Processes audio instantly with sub-200ms delay."
+    desc: "Processes audio instantly with sub-200ms delay. "
   },
   {
     icon: Target,
@@ -25,28 +25,28 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-3 gap-8">
+    <section id="features" className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-3 gap-8">
 
       <div>
-        <span className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+        <span className="text-white font-bold bg-blue-700 px-3 py-1 rounded-full">
           FEATURES
         </span>
 
-        <h2 className="text-3xl font-bold mt-4">
+        <h2 className="text-4xl font-bold mt-4">
           Engineered for Excellence
         </h2>
 
         <p className="text-gray-600 mt-3">
-          State-of-the-art models for mission critical operations.
+          State-of-the-art models for mission critical operations. Our platform leverage state of the art models to deliver unparalleled performance in speech recognition and synthesis.
         </p>
       </div>
 
       <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
         {features.map((f, i) => (
-          <div key={i} className="bg-white p-5 rounded-2xl border">
-            <f.icon className="text-blue-600 mb-3" />
-            <h3 className="font-semibold">{f.title}</h3>
-            <p className="text-gray-600 text-sm">{f.desc}</p>
+          <div key={i} className="bg-white p-12 rounded-xl border flex flex-col items-center text-center">
+            <f.icon className="text-blue-700 mb-3" />
+            <h3 className="font-bold text-2xl">{f.title}</h3>
+            <p className="text-gray-600 text-lg">{f.desc}</p>
           </div>
         ))}
       </div>

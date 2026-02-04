@@ -8,7 +8,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-sm">
+        <span className="text-blue-600 bg-blue-200 px-3 py-1 rounded-full text-sm font-bold">
           FYP PROJECT SPOTLIGHT
         </span>
 
@@ -23,11 +23,11 @@ export default function Hero() {
         </p>
 
         <div className="flex gap-4 mt-6">
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-xl">
+          <button className="bg-blue-700 hover:bg-blue-600 text-white px-6 py-3 rounded-md">
             Try Live Demo
           </button>
 
-          <button className="bg-gray-100 px-6 py-3 rounded-xl">
+          <button className="bg-gray-200 hover:bg-gray-300 px-6 py-3 rounded-md">
             For Businesses
           </button>
         </div>
@@ -38,7 +38,7 @@ export default function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         className="bg-black rounded-2xl h-80 shadow-xl"
       >
-        {/* You can replace with real image */}
+        <img className="h-80 rounded-2xl w-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0WXjML7QTqpN0c4KTkbjOEwErveHmmvDgZS_9AGQt-Nijx3K3DEsXU7Bai57jehQHg8MmX6pQs0gYUbQKocouljnKxxvAyAe02pYQhjZw1VqM6wq0ozCxo5kSkdVCehCVOjy3hSTO8JCKLuDNzMWLvkSDq6EIUvbey6uF25gIB4-JxCpBkYJu0gnnDPA2J4HSlnaJY3SsOpTd3xZWqLi7tRTdilX-MlbrZJIvRVK9PzQMdBZxnlZCK-zSDf1dl_OtzN5gJLlhiXg" alt="" />
       </motion.div>
 
     </section>

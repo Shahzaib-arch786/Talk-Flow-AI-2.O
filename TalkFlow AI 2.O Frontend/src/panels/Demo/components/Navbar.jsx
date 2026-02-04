@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
-import { MessageSquare } from "lucide-react";
+import { Codesandbox, MessageSquare } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Navbar() {
+
+  const navigate = useNavigate();
+
+  const handlleClick = () => {
+    navigate("#get-started");
+  }
   return (
     <nav className="bg-white border-b">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -11,16 +19,15 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2"
         >
-          <MessageSquare className="text-blue-600" />
-          <span className="font-semibold text-lg">TalkFlow AI</span>
+          <Codesandbox className="text-blue-600" />
+          <span className="font-bold text-2xl">TalkFlow AI</span>
         </motion.div>
 
         <div className="hidden md:flex items-center gap-8">
-          <a className="hover:text-blue-600 cursor-pointer">Features</a>
-          <a className="hover:text-blue-600 cursor-pointer">Pipeline</a>
-          <a className="hover:text-blue-600 cursor-pointer">About</a>
-
-          <button className="bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700">
+          <a href="#features" className="hover:text-blue-600 cursor-pointer font-bold">Features</a>
+          <a href="#pipeline" className="hover:text-blue-600 cursor-pointer font-bold">Pipeline</a>
+          <a href="#about" className="hover:text-blue-600 cursor-pointer font-bold">About</a>
+          <button className="bg-blue-700 text-white px-5 py-2 rounded-md hover:bg-blue-600 cursor-pointer" onClick={handlleClick}>
             Get Started
           </button>
         </div>
