@@ -1,0 +1,42 @@
+import { LogOut, User } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+export default function UserDropdown({ open, onClose }) {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    // 🔌 backend logout later
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="absolute right-0 mt-3 w-48 bg-white border rounded-xl shadow-lg z-50"
+        >
+          <button
+            onClick={() => navigate("/admin/profile")}
+            className="flex items-center gap-2 w-full px-4 py-3 hover:bg-gray-100"
+          >
+            <User size={18} />
+            Profile
+          </button>
+
+          <button
+            onClick={logout}
+            className="flex items-center gap-2 w-full px-4 py-3 text-red-600 hover:bg-gray-100"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}

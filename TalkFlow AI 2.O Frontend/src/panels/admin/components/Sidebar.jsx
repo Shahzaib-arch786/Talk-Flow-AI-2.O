@@ -1,23 +1,15 @@
-import {
-  LayoutDashboard,
-  BarChart2,
-  Mic,
-  Cpu,
-  Users,
-  Settings,
-} from "lucide-react";
+import { LayoutDashboard, BarChart2, Mic, Settings } from "lucide-react";
 
 export default function Sidebar() {
   const items = [
     { name: "Dashboard", icon: LayoutDashboard, active: true },
-    { name: "Analytics", icon: BarChart2 },
-    { name: "Recordings", icon: Mic },
-    { name: "AI Models", icon: Cpu },
-    { name: "Agents", icon: Users },
+    { name: "AI Knowledge", icon: BarChart2 },
+    { name: "Call Logs", icon: Mic },
+    { name: "Settings", icon: Settings },
   ];
 
   return (
-    <aside className="w-64 bg-white border-r p-4 hidden md:block">
+    <aside className="w-64 bg-white border-r border-gray-900 p-4 hidden md:block">
       <div className="flex items-center gap-2 mb-8">
         <div className="bg-blue-600 p-2 rounded-xl text-white">
           <LayoutDashboard />
@@ -43,13 +35,6 @@ export default function Sidebar() {
           </div>
         ))}
       </nav>
-
-      <div className="absolute bottom-4">
-        <div className="flex items-center gap-2 text-gray-600">
-          <Settings size={18} />
-          Settings
-        </div>
-      </div>
     </aside>
   );
 }
