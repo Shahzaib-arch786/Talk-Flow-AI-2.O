@@ -24,7 +24,7 @@ export default function CallNavbar() {
 
         {/* RIGHT ACTION */}
         <div>
-          <button className="flex items-center gap-2 bg-blue-700 hover:bg-blue-600 transition px-3 py-2 rounded-md text-white text-sm font-medium">
+          <button className="flex items-center gap-2 bg-blue-700 hover:bg-blue-600 transition px-3 py-2 rounded-md text-white text-sm font-medium" onClick={() => window.location.href = "/settings"}>
             <Settings size={16} />
             Settings
           </button>
