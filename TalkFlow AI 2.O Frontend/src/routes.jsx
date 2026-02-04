@@ -13,6 +13,8 @@ import SignupPage from "./panels/auth/pages/SignupPage";
 
 // Admin pages
 import DashboardPage from "./panels/admin/pages/DashboardPage";
+import Knowledge from "./panels/admin/pages/Knowledge"
+
 
 const AppRoutes = () => {
   return (
@@ -29,6 +31,7 @@ const AppRoutes = () => {
 
         {/* Admin Route */}
         <Route path="/admin/dashboard" element={<DashboardPage />} />
+        <Route path="/admin/knowledge" element={<Knowledge />} />
         
         {/* 404 fallback */}
         <Route path="*" element={<h1 className="text-center font-bold text-2xl">404 – Page Not Found</h1>} />

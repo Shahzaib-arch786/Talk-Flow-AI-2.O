@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export default function Sidebar({ open, onClose }) {
   const items = [
     { name: "Dashboard", icon: LayoutDashboard, active: true, path: "/admin/dashboard" },
-    { name: "AI Knowledge", icon: BarChart2, path: "/admin/ai-knowledge" },
+    { name: "AI Knowledge", icon: BarChart2, path: "/admin/knowledge" },
     { name: "Call Logs", icon: Mic, path: "/admin/call-logs" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
   ];
@@ -13,7 +13,7 @@ export default function Sidebar({ open, onClose }) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-64 bg-white border-r border-gray-200 shadow-sm p-4">
+      <aside className="hidden md:block w-64 bg-white border-r border-gray-200 shadow-sm p-4 sticky top-0 h-screen">
         <SidebarContent items={items} />
       </aside>
 
