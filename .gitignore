@@ -1,0 +1,12 @@
+# Python
+TalkFlow-AI-2.O-Backend/venv/
+TalkFlow-AI-2.O-Backend/__pycache__/
+TalkFlow-AI-2.O-Backend/.env
+*.pyc
+
+# Node
+TalkFlow AI 2.O Frontend/node_modules/
+
+# Editor
+.vscode/
+.idea/
