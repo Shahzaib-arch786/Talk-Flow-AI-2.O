@@ -1,4 +1,5 @@
-import { Mail, Lock, Eye, EyeOff, PersonStanding, Contact, User } from "lucide-react"
+import { useState } from "react"
+import { Mail, Lock, Eye, EyeOff, User } from "lucide-react"
 import usePasswordToggle from "../hooks/usePasswordToggle"
 import Button from "../components/Button"
 import Input from "../components/Input"
@@ -7,6 +8,49 @@ import GoogleButton from "./GoogleButton"
 
 export default function LoginForm() {
   const password = usePasswordToggle()
+
+  // ===== State for backend connection =====
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [passwordValue, setPasswordValue] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
+
+  // ===== Form submit handler =====
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError("")
+    setSuccess("")
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: fullName,
+          email: email,
+          password: passwordValue,
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.detail || "Something went wrong")
+      } else {
+        setSuccess("Account created successfully!")
+        setFullName("")
+        setEmail("")
+        setPasswordValue("")
+      }
+    } catch (err) {
+      setError("Server error. Try again later.")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="w-full max-w-md">
@@ -23,17 +67,30 @@ export default function LoginForm() {
         OR USE EMAIL
       </div>
 
-      <div className="space-y-4">
-        <Input icon={User} placeholder="Enter Full Name" />
-        <Input icon={Mail} placeholder="name@company.com" />
-        
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <Input
+          icon={User}
+          placeholder="Enter Full Name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+        <Input
+          icon={Mail}
+          placeholder="name@company.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
         <div className="relative">
           <Input
             icon={Lock}
             placeholder="Password"
             type={password.type}
+            value={passwordValue}
+            onChange={(e) => setPasswordValue(e.target.value)}
           />
           <button
+            type="button"
             onClick={password.toggle}
             className="absolute right-4 top-2.5 text-gray-400"
           >
@@ -48,9 +105,17 @@ export default function LoginForm() {
           </a>
         </div>
 
-        <Button btnColor="bg-pink-800" btnHover="hover:bg-pink-700">
-          Create Account →
+        <Button
+          type="submit"
+          btnColor="bg-pink-800"
+          btnHover="hover:bg-pink-700"
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create Account →"}
         </Button>
+
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {success && <p className="text-green-500 mt-2">{success}</p>}
 
         <p className="text-sm text-center text-gray-500">
           Already have an account?{" "}
@@ -58,7 +123,7 @@ export default function LoginForm() {
             Login to your business
           </span>
         </p>
-      </div>
+      </form>
     </div>
   )
 }
