@@ -8,6 +8,8 @@ import NotificationPanel from "./NotificationPanel";
 export default function UserMenu() {
   const { user, loading } = useAuthUser();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [name, setName] = useState("");
+  const dropdownRef = useRef();
 
   const {
     notifications,

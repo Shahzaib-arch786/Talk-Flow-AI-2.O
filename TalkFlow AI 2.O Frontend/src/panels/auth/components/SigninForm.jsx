@@ -1,12 +1,54 @@
-import { Mail, Lock, Eye, EyeOff, PersonStanding, Contact, User } from "lucide-react"
-import usePasswordToggle from "../hooks/usePasswordToggle"
-import Button from "../components/Button"
-import Input from "../components/Input"
-import Checkbox from "../components/Checkbox"
-import GoogleButton from "./GoogleButton"
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  User,
+} from "lucide-react";
+import usePasswordToggle from "../hooks/usePasswordToggle";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Checkbox from "../components/Checkbox";
+import GoogleButton from "./GoogleButton";
+import { useState } from "react";
 
-export default function LoginForm() {
-  const password = usePasswordToggle()
+export default function SigninForm() {
+  const password = usePasswordToggle();
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
+
+  const handleSignup = async (fullName, email, password) => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("full_name", fullName);
+      formData.append("email", email);
+      formData.append("password", password);
+
+      console.log("Sending:", fullName, email, password);
+
+
+      const response = await fetch("http://127.0.0.1:8000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(JSON.stringify(data.detail) || "Signup failed");
+        return;
+      }
+
+      localStorage.setItem("token", data.access_token);
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
+  };
 
   return (
     <div className="w-full max-w-md">
@@ -19,20 +61,24 @@ export default function LoginForm() {
         <GoogleButton btnColor="bg-pink-800" btnHover="hover:bg-pink-700" />
       </div>
 
-      <div className="my-6 text-center text-sm text-gray-400">
-        OR USE EMAIL
-      </div>
+      <div className="my-6 text-center text-sm text-gray-400">OR USE EMAIL</div>
 
       <div className="space-y-4">
-        <Input icon={User} placeholder="Enter Full Name" />
-        <Input icon={Mail} placeholder="name@company.com" />
-        
+        <Input 
+        icon={User} 
+        placeholder="Enter Full Name"
+        value={fullName}
+        onChange={(e) => setFullName(e.target.value)}
+        />
+        <Input icon={Mail}
+         placeholder="name@company.com"
+         value={email}
+         onChange={(e) => setEmail(e.target.value)}
+         />
+
         <div className="relative">
-          <Input
-            icon={Lock}
-            placeholder="Password"
-            type={password.type}
-          />
+          <Input icon={Lock} 
+          placeholder="Password" type={password.type} value={passwordValue} onChange={(e) => setPasswordValue(e.target.value)} />
           <button
             onClick={password.toggle}
             className="absolute right-4 top-2.5 text-gray-400"
@@ -48,7 +94,13 @@ export default function LoginForm() {
           </a>
         </div>
 
-        <Button btnColor="bg-pink-800" btnHover="hover:bg-pink-700">
+        <Button
+          btnColor="bg-pink-800"
+          btnHover="hover:bg-pink-700"
+          onClick={() =>
+            handleSignup(fullName, email, passwordValue)
+          }
+        >
           Create Account →
         </Button>
 
@@ -60,5 +112,5 @@ export default function LoginForm() {
         </p>
       </div>
     </div>
-  )
+  );
 }

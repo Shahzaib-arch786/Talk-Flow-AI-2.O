@@ -6,10 +6,48 @@ import RecentCallsTable from "../components/RecentCallsTable";
 import { motion } from "framer-motion";
 import { useDashboard } from "../hooks/useDashboard";
 import { useState } from "react";
+import { useEffect } from "react";
+import { isAuthenticated } from "../../../utils/auth";
 
 export default function DashboardPage() {
   const { stats, intents, calls } = useDashboard();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          window.location.href = "/login";
+          return;
+        }
+
+        const response = await fetch("http://127.0.0.1:8000/auth/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }
+    }
+
+    fetchUser();
+  }, []);
 
   return (
     <div className="flex bg-gray-100 min-h-screen">

@@ -1,14 +1,14 @@
 import { LogOut, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../../utils/auth";
 
 export default function UserDropdown({ open, onClose }) {
   const navigate = useNavigate();
 
-  const logout = () => {
+  const handleLogout = () => {
     // 🔌 backend logout later
-    localStorage.removeItem("token");
-    navigate("/login");
+    logout();
   };
 
   return (
@@ -29,7 +29,7 @@ export default function UserDropdown({ open, onClose }) {
           </button>
 
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="flex items-center gap-2 w-full px-4 py-3 text-red-600 hover:bg-gray-100"
           >
             <LogOut size={18} />

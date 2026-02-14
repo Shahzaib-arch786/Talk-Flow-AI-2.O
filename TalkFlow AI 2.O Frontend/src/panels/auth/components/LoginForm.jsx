@@ -4,9 +4,45 @@ import Button from "../components/Button"
 import Input from "../components/Input"
 import Checkbox from "../components/Checkbox"
 import GoogleButton from "./GoogleButton"
+import { useState } from "react"
 
 export default function LoginForm() {
   const password = usePasswordToggle()
+  const [email, setEmail] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
+  const handleLogin = async (email, password) => {
+  try {
+    const formData = new URLSearchParams();
+    formData.append("username", email);
+    formData.append("password", password);
+
+    console.log("Sending:", email, password);
+
+    const response = await fetch("http://127.0.0.1:8000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(JSON.stringify(data.detail) || "Login failed");
+      return;
+    }
+
+    // Save token
+    localStorage.setItem("token", data.access_token);
+
+    // Redirect after login
+    window.location.href = "/admin/dashboard"; // change according to your route
+  } catch (error) {
+    console.error("Login error:", error);
+  }
+};
+
 
   return (
     <div className="w-full max-w-md">
@@ -24,13 +60,15 @@ export default function LoginForm() {
       </div>
 
       <div className="space-y-4">
-        <Input icon={Mail} placeholder="name@company.com" />
+        <Input icon={Mail} placeholder="name@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
         
         <div className="relative">
           <Input
             icon={Lock}
             placeholder="Password"
             type={password.type}
+            value={passwordValue}
+            onChange={(e) => setPasswordValue(e.target.value)}
           />
           <button
             onClick={password.toggle}
@@ -47,7 +85,7 @@ export default function LoginForm() {
           </a>
         </div>
 
-        <Button>
+        <Button onClick={() => handleLogin(email, passwordValue)}>
           Login to Dashboard →
         </Button>
 
