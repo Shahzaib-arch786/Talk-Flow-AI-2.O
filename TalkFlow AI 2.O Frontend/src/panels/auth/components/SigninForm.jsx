@@ -9,7 +9,7 @@ import GoogleButton from "./GoogleButton"
 export default function LoginForm() {
   const password = usePasswordToggle()
 
-  // ===== State for backend connection =====
+ // 👉 STATE VARIABLES
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
@@ -17,17 +17,21 @@ export default function LoginForm() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
-  // ===== Form submit handler =====
+  // 👉 PUT YOUR FUNCTION HERE
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     setLoading(true)
     setError("")
     setSuccess("")
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/auth/register", {
+
+      const res = await fetch("http://127.0.0.1:8000/auth/signup", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           full_name: fullName,
           email: email,
@@ -38,19 +42,22 @@ export default function LoginForm() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.detail || "Something went wrong")
-      } else {
-        setSuccess("Account created successfully!")
-        setFullName("")
-        setEmail("")
-        setPasswordValue("")
+        setError(data.detail)
+        return
       }
+
+      localStorage.setItem("token", data.access_token)
+
+      setSuccess("Account created successfully")
+
     } catch (err) {
-      setError("Server error. Try again later.")
-    } finally {
-      setLoading(false)
+      setError("Server error")
     }
+
+    setLoading(false)
   }
+
+
 
   return (
     <div className="w-full max-w-md">
