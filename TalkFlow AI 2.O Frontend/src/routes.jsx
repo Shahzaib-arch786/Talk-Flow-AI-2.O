@@ -1,5 +1,5 @@
 // src/routes.jsx
-
+import ProtectedRoute from "./panels/auth/components/ProtectedRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Demo pages
@@ -32,10 +32,10 @@ const AppRoutes = () => {
         <Route path="/signup" element={<SignupPage />} />
 
         {/* Admin Route */}
-        <Route path="/admin/dashboard" element={<DashboardPage />} />
-        <Route path="/admin/knowledge" element={<Knowledge />} />
-        <Route path="/admin/call-logs" element={<CallLogs />} />
-        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route path="/admin/knowledge" element={<ProtectedRoute><Knowledge /></ProtectedRoute>} />
+        <Route path="/admin/call-logs" element={<ProtectedRoute><CallLogs /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         {/* 404 fallback */}
         <Route path="*" element={<h1 className="text-center font-bold text-2xl">404 – Page Not Found</h1>} />
       </Routes>
