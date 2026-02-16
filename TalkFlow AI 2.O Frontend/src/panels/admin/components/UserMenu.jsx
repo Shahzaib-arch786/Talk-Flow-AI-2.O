@@ -6,7 +6,7 @@ import UserDropdown from "./UserDropdown";
 import NotificationPanel from "./NotificationPanel";
 
 export default function UserMenu() {
-  const { user, loading } = useAuthUser();
+  const { admin, loading } = useAuthUser();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [name, setName] = useState("");
   const dropdownRef = useRef();
@@ -43,13 +43,13 @@ export default function UserMenu() {
           className="flex items-center gap-2 cursor-pointer"
         >
           <img
-            src={user.avatar}
+            src={admin?.avatar || "/default-avatar.png"}
             className="w-8 h-8 rounded-full"
-            alt={user.name}
+            alt={admin?.full_name || "admin avatar"}
           />
           <div>
-            <p className="text-sm font-semibold">{user.name}</p>
-            <p className="text-xs text-gray-500">{user.role}</p>
+            <p className="text-sm font-semibold">{admin ? admin.full_name: "Loading"}</p>
+            <p className="text-xs text-gray-500">{admin ? admin.role : "Admin"}</p>
           </div>
         </div>
 

@@ -1,28 +1,42 @@
 import { useEffect, useState } from "react";
 
 export default function useAuthUser() {
-  const [user, setUser] = useState(null);
+  const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 🔌 Replace this with real API later
     const fetchUser = async () => {
       try {
-        // Example future API call:
-        // const res = await fetch("/api/auth/me", { credentials: "include" });
-        // const data = await res.json();
+        const token = localStorage.getItem("token");
 
-        // TEMP mock data
-        const data = {
-          name: "Sarah Jenkins",
-          role: "System Admin",
+        if (!token) {
+          throw new Error("No token found");
+        }
+
+        const response = await fetch("http://127.0.0.1:8000/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Unauthorized");
+        }
+
+        const data = await response.json();
+
+        setAdmin({
+          ...data,
           avatar: "https://i.pravatar.cc/100",
-        };
+        });
 
-        setUser(data);
       } catch (err) {
-        setError("Failed to load user");
+        console.error(err);
+        setError(err.message);
+
+        // Optional: auto logout if token invalid
+        localStorage.removeItem("token");
       } finally {
         setLoading(false);
       }
@@ -31,5 +45,5 @@ export default function useAuthUser() {
     fetchUser();
   }, []);
 
-  return { user, loading, error };
+  return { admin, loading, error };
 }

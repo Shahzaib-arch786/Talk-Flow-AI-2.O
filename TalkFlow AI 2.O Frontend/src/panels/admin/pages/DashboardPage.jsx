@@ -13,9 +13,10 @@ export default function DashboardPage() {
   const { stats, intents, calls } = useDashboard();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [admin, setAdmin] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchAdmin = async () => {
       try {
         const token = localStorage.getItem("token");
 
@@ -38,15 +39,15 @@ export default function DashboardPage() {
         }
 
         const data = await response.json();
-        setUser(data);
+        setAdmin(data);
       } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error("Error fetching admin:", error);
         localStorage.removeItem("token");
         window.location.href = "/login";
       }
     }
 
-    fetchUser();
+    fetchAdmin();
   }, []);
 
   return (
