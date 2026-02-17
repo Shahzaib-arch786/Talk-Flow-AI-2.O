@@ -10,3 +10,4 @@ class DemoUser(Base):
     email = Column(String, unique=True, nullable=False, index=True)
     session_id = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime)
