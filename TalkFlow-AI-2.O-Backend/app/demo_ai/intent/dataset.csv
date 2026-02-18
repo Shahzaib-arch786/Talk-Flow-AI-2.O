@@ -1,0 +1,263 @@
+text,intent
+hello,greeting
+hi,greeting
+hey,greeting
+salam,greeting
+assalam o alaikum,greeting
+aoa,greeting
+good morning,greeting
+good evening,greeting
+good afternoon,greeting
+salam waris,greeting
+hello waris nihari,greeting
+kia haal hai,greeting
+kese ho,greeting
+salam bhai,greeting
+salam sir,greeting
+assalam o alaikum waris,greeting
+hi there,greeting
+hello ji,greeting
+aoa waris nihari,greeting
+salam restaurant,greeting
+hello waris,greeting
+yar salam,greeting
+salam dost,greeting
+hello boss,greeting
+hi waris restaurant,greeting
+
+
+
+menu dikhao,menu_inquiry
+what is in the menu,menu_inquiry
+aaj kya available hai,menu_inquiry
+waris ka menu kya hai,menu_inquiry
+kya kya dishes hain,menu_inquiry
+show me menu,menu_inquiry
+nihari ke ilawa kya milta hai,menu_inquiry
+special kya hai,menu_inquiry
+today special kya hai,menu_inquiry
+aap ke paas kya items hain,menu_inquiry
+menu please,menu_inquiry
+items batao,menu_inquiry
+full menu show karo,menu_inquiry
+kya serve karte ho,menu_inquiry
+food list batao,menu_inquiry
+available dishes kya hain,menu_inquiry
+kya khane ko milta hai,menu_inquiry
+restaurant ka menu dikhao,menu_inquiry
+menu send karo,menu_inquiry
+kya options hain,menu_inquiry
+waris mein kya milta hai,menu_inquiry
+nihari ka menu kya hai,menu_inquiry
+family deals hain?,menu_inquiry
+breakfast menu kya hai,menu_inquiry
+lunch mein kya serve hota hai,menu_inquiry
+dinner options kya hain,menu_inquiry
+full plate kya kya hai,menu_inquiry
+half plate options kya hain,menu_inquiry
+naan aur kulcha available hain?,menu_inquiry
+maghaz nihari milti hai?,menu_inquiry
+half plate nihari available hai?,menu_inquiry
+full plate nihari available hai?,menu_inquiry
+half plate maghaz nihari available hai?,menu_inquiry
+full plate maghaz nihari available hai?,menu_inquiry
+nalli nihari milti hai?,menu_inquiry
+half plate nalli nihari available hai?,menu_inquiry
+full plate nalli nihari available hai?,menu_inquiry
+
+
+mujhe table book karni hai,booking_table
+book a table,booking_table
+2 logon ke liye table chahiye,booking_table
+reservation karni hai,booking_table
+aaj shaam ke liye table book karo,booking_table
+family ke liye booking karni hai,booking_table
+4 logon ke liye reservation,booking_table
+kal ke liye table book kar do,booking_table
+mujhe seat reserve karni hai,booking_table
+dinner ke liye booking,booking_table
+lunch ke liye table chahiye,booking_table
+booking available hai?,booking_table
+reservation kaise karte hain,booking_table
+table free hai?,booking_table
+advance booking karni hai,booking_table
+private table chahiye,booking_table
+reservation kar do,booking_table
+booking confirm karo,booking_table
+weekend ke liye table chahiye,booking_table
+table arrange karo,booking_table
+8 logon ke liye booking chahiye,booking_table
+birthday ke liye table chahiye,booking_table
+special event ke liye booking,booking_table
+reservation confirm hai?,booking_table
+meri booking check karo,booking_table
+table arrange karo,booking_table
+
+
+bye,goodbye
+goodbye,goodbye
+allah hafiz,goodbye
+khuda hafiz,goodbye
+see you,goodbye
+see you later,goodbye
+take care,goodbye
+bye waris,goodbye
+phir milte hain,goodbye
+ok bye,goodbye
+thanks bye,goodbye
+shukriya bye,goodbye
+chalo theek hai bye,goodbye
+milte hain,goodbye
+allah hafiz waris,goodbye
+ok khuda hafiz,goodbye
+bye ji,goodbye
+see you soon,goodbye
+bye restaurant,goodbye
+ok see you,goodbye
+
+maghaz nihari mein kya hota hai,item_details
+beef nihari ingredients kya hain,item_details
+special nihari kis cheez ki hoti hai,item_details
+brain nihari kya hoti hai,item_details
+nihari spicy hai?,item_details
+kya aapki nihari teekhi hai?,item_details
+naan fresh hota hai?,item_details
+kulcha kis type ka hai?,item_details
+family deal mein kya included hai?,item_details
+half plate kitni hoti hai?,item_details
+full plate kitni hoti hai?,item_details
+kya yeh nehari spicy hai?,item_details
+kya yeh nehari mild hai?,item_details
+maghaz fresh hota hai?,item_details
+special mein kya difference hai?,item_details
+nihari kis gosht ki hai?,item_details
+kia kulcha aur naan donon available hain?,item_details
+apka pass coke aur pepsi dono hain?,item_details
+apka pass cold drinks hain?,item_details
+apka pass soft drinks hain?,item_details
+apka pass sprite aur 7up hain?,item_details
+kya aap beef serve karte ho?,item_details
+kya chicken option hai?,item_details
+dish ka detail batao,item_details
+yeh item kis cheez se bana hai?,item_details
+kya oil zyada hota hai?,item_details
+serving size kya hai?,item_details
+is dish mein kya hota hai?,item_details
+detail batao is item ka,item_details
+cold drinks available ha,item_details
+drinks konsi available ha?,item_details
+
+
+i want to order nihari,order_delivery
+mujy order karna hai,order_delivery
+ghar pe delivery chahiye,order_delivery
+order place karna hai,order_delivery
+mujhe 2 naan aur 1 nihari ka order krna ha,order_delivery
+delivery available hai?,order_delivery
+takeaway karna hai,order_delivery
+ghar tak khana bhej skty hein?,order_delivery
+order confirm karo,order_delivery
+mujhe khana delivery karwana hai,order_delivery
+family deal ka order deliver kr skty hein?,order_delivery
+maghaz aur naan deliver kr skty hn,order_delivery
+delivery charges kya hain?,order_delivery
+home delivery kar skty hein?,order_delivery
+online order karna hai,order_delivery
+order place ho gaya?,order_delivery
+2 half plates ki delivery cheyay,order_delivery
+full plate pack karo,order_delivery
+parcel deliver kar dein,order_delivery
+delivery timing kya hai?,order_delivery
+order ready hai?,order_delivery
+takeaway ready karo,order_delivery
+address pe bhejo,order_delivery
+
+
+mera order kahan hai,order_status
+where is my order,order_status
+delivery kab pohanchay gi,order_status
+order status check karo,order_status
+mera parcel nikla?,order_status
+order dispatch hua?,order_status
+kitni dair lagegi?,order_status
+order confirm hua?,order_status
+tracking available hai?,order_status
+mera khana kab ayega?,order_status
+delivery late kyun hai?,order_status
+order number check karo,order_status
+parcel kaha tak pohancha?,order_status
+order ready hai?,order_status
+mera order delay hai?,order_status
+order time kya hai?,order_status
+delivery boy nikal gaya?,order_status
+mera khana kahan hai?,order_status
+order update do,order_status
+order status batao,order_status
+kidhr rah gaya mera order?,order_status
+delivery boy kaha hai?,order_status
+order kab pohanchay ga?,order_status
+
+
+
+restaurant kab khulta hai,opening_hours
+what are your timings,opening_hours
+aaj kitne baje open ho,opening_hours
+closing time kya hai,opening_hours
+opening hours batao,opening_hours
+subah kitne baje khulte ho,opening_hours
+raat kitne baje band hote ho,opening_hours
+weekend timing kya hai,opening_hours
+friday timing kya hai,opening_hours
+daily schedule kya hai,opening_hours
+lunch timing kya hai,opening_hours
+dinner timing kya hai,opening_hours
+aaj open ho?,opening_hours
+restaurant band hai?,opening_hours
+operating hours kya hain,opening_hours
+
+
+restaurant kahan hai,location
+where are you located,location
+address kya hai,location
+waris nihari ka address batao,location
+branch kahan hai,location
+nearby branch hai?,location
+google map location do,location
+kis area mein ho?,location
+location share karo,location
+restaurant ka exact address kya hai,location
+lahore mein kahan ho?,location
+branch location batao,location
+map link bhejo,location
+kaunsi street par ho?,location
+location detail do,location
+
+
+khana acha nahi tha,complaint
+food was cold,complaint
+service slow thi,complaint
+order galat aya,complaint
+complaint karni hai,complaint
+nihari thandi thi,complaint
+delivery late thi,complaint
+taste acha nahi tha,complaint
+customer service kharab thi,complaint
+mujhe complaint register karni hai,complaint
+naan sakht tha,complaint
+order missing tha,complaint
+quality theek nahi thi,complaint
+spicy zyada tha,complaint
+experience acha nahi tha,complaint
+
+naan kitna ka ha?,pricing
+how much is naan?,pricing
+roti kitna ki ha?,pricing
+nalli nehari kitni ki ha?,pricing
+half plate nalli nehari kitna ki ha?,pricing
+full plate nalli nehari kitna ki ha?,pricing
+maghaz nehari kitna ki ha?,pricing
+half plate maghaz nehari kitna ki ha?,pricing
+full plate maghaz nehari kitna ki ha?,pricing
+raita ka pack kitna ka ha?,pricing
+salad ka pack kitna ka ha?,pricing
+drinks ki price kia ha?,pricing
