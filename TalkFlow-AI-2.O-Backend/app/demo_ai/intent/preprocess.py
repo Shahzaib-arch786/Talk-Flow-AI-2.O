@@ -1,18 +1,27 @@
 import re
-import string
 
-
-def clean_text(text: str) -> str:
+def clean_text(text: str):
     text = text.lower()
 
-    # Remove URLs
-    text = re.sub(r"http\S+|www\S+", "", text)
-
-    # Remove numbers
-    text = re.sub(r"\d+", "", text)
-
     # Remove punctuation
-    text = text.translate(str.maketrans("", "", string.punctuation))
+    text = re.sub(r"[^\w\s]", " ", text)
+
+    # Normalize common Roman Urdu variations
+    replacements = {
+        "mujy": "mujhe",
+        "mjy": "mujhe",
+        "krni": "karni",
+        "krna": "karna",
+        "chahiya": "cheyay",
+        "chaiye": "chahiye",
+        "hni": "hain",
+        "ha": "hai",
+        "hn": "hain",
+
+    }
+
+    for wrong, correct in replacements.items():
+        text = text.replace(wrong, correct)
 
     # Remove extra spaces
     text = re.sub(r"\s+", " ", text).strip()

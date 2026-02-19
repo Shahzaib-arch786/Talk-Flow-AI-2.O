@@ -6,6 +6,9 @@ from app.auth.dependencies import get_current_user
 from fastapi.middleware.cors import CORSMiddleware
 # from app.admin.routes import router as admin_router
 
+
+
+
 app = FastAPI(
     title="TalkFlow AI Backend",
     version="1.0.0"
