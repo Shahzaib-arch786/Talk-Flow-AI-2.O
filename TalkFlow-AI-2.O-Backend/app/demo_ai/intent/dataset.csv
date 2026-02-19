@@ -24,9 +24,20 @@ yar salam,greeting
 salam dost,greeting
 hello boss,greeting
 hi waris restaurant,greeting
-
-
-
+salam bhai jaan,greeting
+assalamu alaikum sir,greeting
+salam bhai sahab,greeting
+assalam o alaikum bhai,greeting
+hello waris nihari restaurant,greeting
+hey waris,greeting
+hey is anyone there?,greeting
+hi waris nihari restaurant,greeting
+salam waris nihari restaurant,greeting
+namaste,greeting
+hey guys,greeting
+good day,greeting
+asalam o alaikum dost,greeting
+salam bhai log,greeting
 menu dikhao,menu_inquiry
 what is in the menu,menu_inquiry
 aaj kya available hai,menu_inquiry
@@ -64,6 +75,20 @@ full plate maghaz nihari available hai?,menu_inquiry
 nalli nihari milti hai?,menu_inquiry
 half plate nalli nihari available hai?,menu_inquiry
 full plate nalli nihari available hai?,menu_inquiry
+menu ma kia ha ?,menu_inquiry
+desi food menu kya hai?,menu_inquiry
+beef nihari hai?,menu_inquiry
+mutton nihari hai?,menu_inquiry
+chicken nihari hai?,menu_inquiry
+fanta available hai?,menu_inquiry
+coke available hai?,menu_inquiry
+fanta ki bottle hai?,menu_inquiry
+coke ki bottle hai?,menu_inquiry
+sprite ki bottle hai?,menu_inquiry
+7up ki bottle hai?,menu_inquiry
+nehari ke alawa kya milta hai?,menu_inquiry
+nehari hai ya maghaz nihari?,menu_inquiry
+nehari hai?,menu_inquiry
 
 
 mujhe table book karni hai,booking_table
@@ -92,6 +117,11 @@ special event ke liye booking,booking_table
 reservation confirm hai?,booking_table
 meri booking check karo,booking_table
 table arrange karo,booking_table
+2 logon ke liye table book kar do,booking_table
+3 logon ke liye table book kar do,booking_table
+5 logon ke liye table book kar do,booking_table
+table available hai?,booking_table
+
 
 
 bye,goodbye
@@ -114,6 +144,12 @@ bye ji,goodbye
 see you soon,goodbye
 bye restaurant,goodbye
 ok see you,goodbye
+allah hafiz dost,goodbye
+allah hafiz bhai,goodbye
+khuda hafiz bhai,goodbye
+khuda nigahban,goodbye
+salam,goodbye
+
 
 maghaz nihari mein kya hota hai,item_details
 beef nihari ingredients kya hain,item_details
@@ -146,6 +182,17 @@ is dish mein kya hota hai?,item_details
 detail batao is item ka,item_details
 cold drinks available ha,item_details
 drinks konsi available ha?,item_details
+nihari beef hai?,item_details
+nihari mutton hai?,item_details
+nihsri chicken hai?,item_details
+nehari beef ha ya mutton?,item_details
+nehari mein kya kya hota hai?,item_details
+maghaz nihari mein kya hota hai?,item_details
+nihari mein maghaz hota hai?,item_details
+nalli nihari mein kya hota hai?,item_details
+nihari mein nalli hoti hai?,item_details
+nalli nehari mutton hai?,item_details
+nalli nehari beef hai?,item_details
 
 
 i want to order nihari,order_delivery
@@ -171,6 +218,11 @@ delivery timing kya hai?,order_delivery
 order ready hai?,order_delivery
 takeaway ready karo,order_delivery
 address pe bhejo,order_delivery
+mera order likhein,order_delivery
+write down my order,order_delivery
+i want to order food,order_delivery
+i want to order online,order_delivery
+i want to order nihari,order_delivery
 
 
 mera order kahan hai,order_status
@@ -231,6 +283,12 @@ branch location batao,location
 map link bhejo,location
 kaunsi street par ho?,location
 location detail do,location
+apka restaurant kis jagah par hai?,location
+apka restaurant kis city mein hai?,location
+apki location kya hai?,location
+apka restaurant kis area mein hai?,location
+kitni locations hain?,location
+apka restaurant kis location par hai?,location
 
 
 khana acha nahi tha,complaint
@@ -248,6 +306,13 @@ order missing tha,complaint
 quality theek nahi thi,complaint
 spicy zyada tha,complaint
 experience acha nahi tha,complaint
+khana thanda tha,complaint
+service slow thi,complaint
+delivery boy rude tha,complaint
+order galat aya tha,complaint
+khana fresh nahi tha,complaint
+order incomplete tha,complaint
+
 
 naan kitna ka ha?,pricing
 how much is naan?,pricing
@@ -261,13 +326,26 @@ full plate maghaz nehari kitna ki ha?,pricing
 raita ka pack kitna ka ha?,pricing
 salad ka pack kitna ka ha?,pricing
 drinks ki price kia ha?,pricing
+nehari ki price kya hai?,pricing
+half plate nihari ki price kya hai?,pricing
+full plate nihari ki price kya hai?,pricing
+half litre coke kitna ka ha?,pricing
+half litre fanta kitna ka ha?,pricing
+half litre sprite kitna ka ha?,pricing
+half litre 7up kitna ka ha?,pricing
+1.5 litre coke kitna ka ha?,pricing
+1.5 litre fanta kitna ka ha?,pricing
+1.5 litre sprite kitna ka ha?,pricing
+1.5 litre 7up kitna ka ha?,pricing
 
 kya aapki restaurant mein parking available hai?,general
 okye, general
 thank you, general
 sorry, general
+thek hai, general
 shukriya, general
-mazrat, general
+mazrat bhai, general
+mazrat sahab, general
 parking available hai?,general
 parking hai?,general
 ma samjha nahi, general
@@ -280,4 +358,10 @@ ladies washroom available hai?,general
 gents washroom available hai?,general
 kya aapki restaurant mein AC hai?,general
 AC available hai?,general
+apki baat samajh nahi aayi, general
+kya aap thoda aur explain kar sakte hain?,general
+dobara samjha sakte hain?,general
+kya aapki restaurant mein smoking area hai?,general
+smoking area available hai?,general
+is there a smoking area in your restaurant?,general
 
