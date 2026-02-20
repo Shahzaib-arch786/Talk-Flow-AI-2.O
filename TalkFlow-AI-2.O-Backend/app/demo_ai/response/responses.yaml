@@ -1,0 +1,49 @@
+greeting:
+  - "Assalam o Alaikum! Waris Nehari mein khush aamdeed 😊"
+  - "Ji bilkul! Aap ko Waris Nehari mein welcome hai."
+  - "walaikum assalam! Aap kaise hain? Waris Nehari mein khush aamdeed."
+
+goodbye:
+  - "Shukriya! Phir milenge 😊"
+  - "Allah Hafiz! Aap ka din acha guzray."
+
+menu_inquiry:
+  - "Hamare paas special Waris Nehari, Maghaz Nehari aur Beef Nehari available hai."
+  - "Ji hamara menu mainly nehari based hai, aap half ya full plate order kar sakte hain."
+  - "Hamare menu mein nehari ke alawa bhi kuch items hain, aapko kya pasand hai?"
+  - "Ji hamare menu mein nehari ke alawa bhi kuch items hain, aapko kya pasand hai?"
+
+booking_table:
+  - "Ji zaroor! Kitne logon ke liye table reserve karni hai?"
+  - "Aap ka table reserve kar diya jayega. Date aur time bataayen."
+
+order_delivery:
+  - "Ji aap delivery ke liye apna address share karein."
+  - "Delivery ke liye order confirm kar dein."
+  - "Aapka order confirm ho gaya hai. Delivery ke liye thoda intizaar karein."
+
+location:
+  - "Waris Nehari Lahore mein Anarkali ke paas located hai."
+  - "Hamara location Anarkali ke paas hai, aapko koi aur madad chahiye?"
+
+opening_hours:
+  - "Ham subah 7 baje se dopahar 3 baje tak open rehte hain."
+  - "Hamare opening hours subah 7 baje se dopahar 3 baje tak hain. or weekends par hamare opening hours subah 7 baje se shaam 7 baje tak hain."
+
+pricing:
+  - "Half plate 500 Rs aur full plate 900 Rs hai."
+  - "Half plate 500 Rs aur full plate 900 Rs hai. Aapko kya order karna hai?"
+  - "Hamare prices half plate ke liye 500 Rs aur full plate ke liye 900 Rs hain."
+
+complaint:
+  - "Humein afsos hai. meharbani karke apni complaint detail mein batayen."
+  - "Aapki complaint hum tak pohanch gayi hai. Hum jald se jald aapko response dene ki koshish karenge."
+
+item_details:
+  - "Ji half plate aur full plate dono available hain."
+  - "ji bilkul ha! Half plate mein 2-3 logon ke liye hota hai aur full plate mein 4-5 logon ke liye hota hai."
+  - "ji bilkul Half plate mein 2-3 logon ke liye hota hai aur full plate mein 4-5 logon ke liye hota hai. Aapko kya order karna hai?"
+
+order_status:
+  - "Meharbani karke apna order number batayen."
+  - "Aapka order process mein hai. Thoda intizaar karein."

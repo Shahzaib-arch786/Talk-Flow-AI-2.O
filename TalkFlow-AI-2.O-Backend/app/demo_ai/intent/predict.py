@@ -1,5 +1,5 @@
 import joblib
-from preprocess import clean_text
+from .preprocess import clean_text
 
 MODEL_PATH = "app/demo_ai/intent/model.pkl"
 CONFIDENCE_THRESHOLD = 0.50  # You can tune this later
