@@ -11,55 +11,80 @@ export default function useDemoForm() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  // Handle input change
   const handleChange = (e) => {
+    setError(""); // clear error while typing
     setForm((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const setLanguage = (lang) => {
-    setForm((prev) => ({
-      ...prev,
-      language: lang,
-    }));
+  // Basic email validation
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   const handleSubmit = async () => {
     if (loading) return;
 
-    if (!form.name.trim() || !form.email.trim()) {
-      alert("Please fill all fields");
+    const name = form.name.trim();
+    const email = form.email.trim();
+
+    // Required fields check
+    if (!name || !email) {
+      setError("Please complete all required fields.");
+      return;
+    }
+
+    // Email format check
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid business email address.");
       return;
     }
 
     try {
       setLoading(true);
+      setError("");
 
       const response = await fetch("http://127.0.0.1:8000/demo/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          full_name: form.name,
-          email: form.email,
+          full_name: name,
+          email: email,
         }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok || !data?.session_id) {
-        throw new Error(data?.detail || "Failed to start demo");
+      // Safely parse JSON
+      let data = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
       }
 
-      localStorage.setItem("demo_session_id", data.session_id);
+      // Handle backend validation error
+      if (!response.ok) {
+        setError(
+          data?.detail ||
+            "A demo session is already active for this email."
+        );
+        return;
+      }
 
-      // ✅ FIXED ROUTE
-      navigate("/demo/live");
+      // Success
+      if (data?.session_id) {
+        localStorage.setItem("demo_session_id", data.session_id);
+        navigate("/demo/live");
+      } else {
+        setError("Unexpected server response. Please try again.");
+      }
 
-    } catch (error) {
-      console.error("Demo Start Error:", error);
-      alert(error.message || "Cannot connect to backend");
+    } catch (err) {
+      setError("Unable to connect to the server. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -68,8 +93,9 @@ export default function useDemoForm() {
   return {
     form,
     handleChange,
-    setLanguage,
     handleSubmit,
     loading,
+    error,
+    setError,
   };
 }
