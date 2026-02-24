@@ -8,7 +8,7 @@ from sklearn.svm import LinearSVC
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import classification_report, accuracy_score
 
-from preprocess import clean_text
+from .preprocess import clean_text
 
 
 # ==========================

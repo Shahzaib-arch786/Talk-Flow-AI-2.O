@@ -38,6 +38,17 @@ hey guys,greeting
 good day,greeting
 asalam o alaikum dost,greeting
 salam bhai log,greeting
+السلام علیکم,greeting
+ہیلو,greeting
+کیا حال ہے,greeting
+السلام علیکم,greeting
+ہیلو,greeting
+کیا حال ہے,greeting
+السلام علیکم جی,greeting
+السلام علیکم ریسٹورنٹ,greeting
+
+
+
 menu dikhao,menu_inquiry
 what is in the menu,menu_inquiry
 aaj kya available hai,menu_inquiry
@@ -89,6 +100,11 @@ sprite ki bottle hai?,menu_inquiry
 nehari ke alawa kya milta hai?,menu_inquiry
 nehari hai ya maghaz nihari?,menu_inquiry
 nehari hai?,menu_inquiry
+آپ کے مینو میں کیا ہے,menu_inquiry
+مینو دکھائیں,menu_inquiry
+کیا کیا کھانے دستیاب ہیں,menu_inquiry
+آپ کے پاس کون کون سے ڈشز ہیں,menu_inquiry
+مینو کی لسٹ بتائیں,menu_inquiry
 
 
 mujhe table book karni hai,booking_table
@@ -121,6 +137,14 @@ table arrange karo,booking_table
 3 logon ke liye table book kar do,booking_table
 5 logon ke liye table book kar do,booking_table
 table available hai?,booking_table
+مجھے ٹیبل بک کرنی ہے,booking_table
+دو لوگوں کے لیے ٹیبل چاہیے,booking_table
+چار افراد کے لیے ریزرویشن چاہیے,booking_table
+مجھے ٹیبل بک کرنی ہے,booking_table
+دو لوگوں کے لیے ٹیبل چاہیے,booking_table
+چار افراد کے لیے ریزرویشن چاہیے,booking_table
+آج رات کے لیے ٹیبل چاہیے,booking_table
+کل کے لیے ٹیبل ریزرو کر دیں,booking_table
 
 
 
@@ -149,6 +173,11 @@ allah hafiz bhai,goodbye
 khuda hafiz bhai,goodbye
 khuda nigahban,goodbye
 salam,goodbye
+اللہ حافظ,goodbye
+خدا حافظ,goodbye
+ٹھیک ہے اللہ حافظ,goodbye
+بعد میں بات کرتے ہیں,goodbye
+شکریہ اللہ حافظ,goodbye
 
 
 maghaz nihari mein kya hota hai,item_details
@@ -193,6 +222,11 @@ nalli nihari mein kya hota hai?,item_details
 nihari mein nalli hoti hai?,item_details
 nalli nehari mutton hai?,item_details
 nalli nehari beef hai?,item_details
+نہاری دستیاب ہے, item_details
+آپ کے پاس نہاری ہے, item_details
+کیا کولڈ ڈرنک ہے, item_details
+فل پلیٹ نہاری کتنی ہے, item_details
+آدھی پلیٹ نہاری ہے کیا, item_details
 
 
 i want to order nihari,order_delivery
@@ -223,6 +257,11 @@ write down my order,order_delivery
 i want to order food,order_delivery
 i want to order online,order_delivery
 i want to order nihari,order_delivery
+مجھے ڈیلیوری چاہیے,order_delivery
+آرڈر گھر بھیج دیں,order_delivery
+ڈیلیوری کر دیں,order_delivery
+گھر پر آرڈر چاہیے,order_delivery
+آرڈر ایڈریس پر بھیج دیں,order_delivery
 
 
 mera order kahan hai,order_status
@@ -248,6 +287,11 @@ order status batao,order_status
 kidhr rah gaya mera order?,order_status
 delivery boy kaha hai?,order_status
 order kab pohanchay ga?,order_status
+میرا آرڈر کہاں تک پہنچا,order_status
+آرڈر کا کیا بنا,order_status
+میرا آرڈر کب آئے گا,order_status
+آرڈر کی اپڈیٹ دیں,order_status
+میرا آرڈر کنفرم ہوا ہے,order_status
 
 
 
@@ -266,6 +310,14 @@ dinner timing kya hai,opening_hours
 aaj open ho?,opening_hours
 restaurant band hai?,opening_hours
 operating hours kya hain,opening_hours
+آپ کب کھلتے ہیں,opening_hours
+ٹائمنگ کیا ہے,opening_hours
+آپ کتنے بجے بند ہوتے ہیں,opening_hours
+آپ کب کھلتے ہیں,opening_hours
+ٹائمنگ کیا ہے,opening_hours
+آپ کتنے بجے بند ہوتے ہیں,opening_hours
+آج کتنے بجے تک کھلے ہیں,opening_hours
+ریسٹورنٹ کے اوقات کیا ہیں,opening_hours
 
 
 restaurant kahan hai,location
@@ -289,6 +341,14 @@ apki location kya hai?,location
 apka restaurant kis area mein hai?,location
 kitni locations hain?,location
 apka restaurant kis location par hai?,location
+آپ کہاں واقع ہیں,location
+آپ کا ایڈریس کیا ہے,location
+ریسٹورنٹ کہاں ہے,location
+آپ کہاں واقع ہیں,location
+ریسٹورنٹ کہاں ہے,location
+آپ کا ایڈریس کیا ہے,location
+لوکیشن بتائیں,location
+آپ کس علاقے میں ہیں,location
 
 
 khana acha nahi tha,complaint
@@ -312,6 +372,14 @@ delivery boy rude tha,complaint
 order galat aya tha,complaint
 khana fresh nahi tha,complaint
 order incomplete tha,complaint
+مجھے شکایت ہے,complaint
+میرا آرڈر غلط آیا ہے,complaint
+کھانا ٹھنڈا تھا,complaint
+مجھے شکایت ہے,complaint
+کھانا ٹھنڈا تھا,complaint
+آرڈر غلط آیا ہے,complaint
+سروس اچھی نہیں تھی,complaint
+کھانا دیر سے آیا,complaint
 
 
 naan kitna ka ha?,pricing
@@ -337,6 +405,11 @@ half litre 7up kitna ka ha?,pricing
 1.5 litre fanta kitna ka ha?,pricing
 1.5 litre sprite kitna ka ha?,pricing
 1.5 litre 7up kitna ka ha?,pricing
+نہاری کی قیمت کیا ہے,pricing
+فل پلیٹ کتنے کی ہے,pricing
+آدھی پلیٹ کی قیمت کیا ہے,pricing
+کولڈ ڈرنک کتنے کی ہے,pricing
+ریٹس کیا ہیں,pricing
 
 kya aapki restaurant mein parking available hai?,general
 okye, general
@@ -364,4 +437,9 @@ dobara samjha sakte hain?,general
 kya aapki restaurant mein smoking area hai?,general
 smoking area available hai?,general
 is there a smoking area in your restaurant?,general
+آپ کیا کرتے ہیں,general
+یہ کون سا ریسٹورنٹ ہے,general
+کیا آپ مدد کر سکتے ہیں,general
+آپ کا سسٹم کیسے کام کرتا ہے,general
+کیا میں سوال پوچھ سکتا ہوں,general
 
