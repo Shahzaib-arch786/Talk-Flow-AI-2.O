@@ -39,6 +39,11 @@ class ResponseManager:
             and any(char.isdigit() for char in text)
         ):
             return True
+        
+        # If contains number + possible item words
+        items = self.extractor.extract_items(text)
+        if items:
+            return True
 
         # If contains item + plate
         if (
