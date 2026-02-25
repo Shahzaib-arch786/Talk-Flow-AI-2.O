@@ -30,7 +30,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
-app.include_router(demo_router, prefix="/demo", tags=["Demo"])
+app.include_router(demo_router)
 # app.include_router(admin_router, prefix="/admin", tags=["Admin"], dependencies=[Depends(get_current_user)])
 
 # Root route

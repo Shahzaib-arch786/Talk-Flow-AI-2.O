@@ -7,7 +7,7 @@ from datetime import datetime
 from .models import DemoUser
 from fastapi import HTTPException
 
-router = APIRouter(prefix="/demo", tags=["User Panel"])
+router = APIRouter(prefix="/demo", tags=["demo"])
 
 
 @router.post("/start", response_model=DemoUserResponse)
