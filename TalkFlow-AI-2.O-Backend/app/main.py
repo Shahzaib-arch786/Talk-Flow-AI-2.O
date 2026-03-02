@@ -8,6 +8,8 @@ from app.auth.routes import router as auth_router
 from app.auth.dependencies import get_current_user
 from app.demo import models as demo_models
 from app.demo.routes import router as demo_router
+from fastapi.staticfiles import StaticFiles
+from app.demo_ai.routes import router as ai_router
 
 load_dotenv()
 
@@ -22,6 +24,11 @@ app = FastAPI(
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
+# Create static/audio directory if not exists
+os.makedirs("static/audio", exist_ok=True)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
@@ -34,6 +41,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(demo_router)
+app.include_router(ai_router)
 # app.include_router(admin_router, prefix="/admin", tags=["Admin"], dependencies=[Depends(get_current_user)])
 
 # Root route

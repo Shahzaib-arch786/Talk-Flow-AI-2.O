@@ -1,3 +1,4 @@
+import os
 import pyttsx3
 from app.demo_ai.tts.base import BaseTTS
 
@@ -5,15 +6,14 @@ from app.demo_ai.tts.base import BaseTTS
 class LocalTTS(BaseTTS):
 
     def __init__(self):
-        pass  # No persistent engine
+        self.engine = pyttsx3.init()
 
-    def speak(self, text: str):
-        engine = pyttsx3.init()
+    def generate_audio(self, text: str, session_id: str) -> str:
 
-        engine.setProperty("rate", 160)
-        engine.setProperty("volume", 1.0)
+        filename = f"{session_id}.mp3"
+        file_path = os.path.join("static/audio", filename)
 
-        engine.say(text)
-        engine.runAndWait()
+        self.engine.save_to_file(text, file_path)
+        self.engine.runAndWait()
 
-        engine.stop()
+        return f"/static/audio/{filename}"
