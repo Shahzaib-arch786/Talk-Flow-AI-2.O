@@ -1,21 +1,30 @@
-from app.demo_ai.tts.local_tts import LocalTTS
-from app.demo_ai.tts.google_tts import GoogleTTS
-
+import os
+import uuid
+from gtts import gTTS
 
 class TextToSpeech:
 
     def __init__(self):
-        self.english_engine = LocalTTS()
-        self.urdu_engine = GoogleTTS()
+        self.audio_folder = "static/audio"
 
-    def generate_audio(self, text: str, session_id: str) -> str:
+        if not os.path.exists(self.audio_folder):
+            os.makedirs(self.audio_folder)
 
-        # detect Urdu characters
-        contains_urdu = any('\u0600' <= ch <= '\u06FF' for ch in text)
+    def generate_audio(self, text: str, session_id: str, lang="auto"):
 
-        if contains_urdu:
-            engine = self.urdu_engine
+        # 🔥 Auto detect Urdu vs English
+        if lang == "auto":
+            if any('\u0600' <= char <= '\u06FF' for char in text):
+                language = "ur"
+            else:
+                language = "en"
         else:
-            engine = self.english_engine
+            language = lang
 
-        return engine.generate_audio(text, session_id)
+        file_name = f"{session_id}_{uuid.uuid4().hex}.mp3"
+        file_path = os.path.join(self.audio_folder, file_name)
+
+        tts = gTTS(text=text, lang=language)
+        tts.save(file_path)
+
+        return f"/static/audio/{file_name}"
