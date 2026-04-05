@@ -1,6 +1,8 @@
 from app.demo_ai.intent.predict import IntentClassifier
 from app.demo_ai.tts.tts_manager import TextToSpeech
 from app.demo_ai.stt.local_whisper import LocalWhisperSTT
+from app.demo_ai.utils.urdu_normalizer import urdu_to_roman
+
 
 # 🔥 Load heavy models ONCE
 intent_model = IntentClassifier()
@@ -12,9 +14,11 @@ def process_voice(audio_path: str, response_manager, state, session_id: str):
 
     # 1️⃣ STT
     transcription = stt_engine.transcribe(audio_path)
+    normalized_text = urdu_to_roman(transcription)
+    print("[DEBUG] Normalized Text:", normalized_text)
 
     # 2️⃣ Intent
-    intent_result = intent_model.predict(transcription)
+    intent_result = intent_model.predict(normalized_text)
 
     # 3️⃣ Response
     response_text = response_manager.generate_response(
