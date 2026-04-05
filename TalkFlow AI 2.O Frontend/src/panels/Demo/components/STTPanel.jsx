@@ -1,7 +1,7 @@
 import { Mic } from "lucide-react";
 import useAICall from "../hooks/useAICall";
 
-export default function STTPanel() {
+export default function STTPanel({ai}) {
   const { transcript } = useAICall();
 
   return (
@@ -25,7 +25,7 @@ export default function STTPanel() {
         <p className="text-xs text-green-600">● LIVE TRANSCRIPTION</p>
 
         <p className="italic text-gray-600 mt-2">
-          "{transcript}"
+          "{ai.transcript || '...'}"
         </p>
       </div>
     </div>

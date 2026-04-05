@@ -2,8 +2,9 @@ import { Mic } from "lucide-react";
 import { motion } from "framer-motion";
 import useAICall from "../hooks/useAICall";
 
-export default function SpeakButton() {
+export default function SpeakButton({ai}) {
   const { isListening, toggleListening } = useAICall();
+  if (!ai) return null;
 
   return (
     <div className="flex flex-col items-center mt-8">

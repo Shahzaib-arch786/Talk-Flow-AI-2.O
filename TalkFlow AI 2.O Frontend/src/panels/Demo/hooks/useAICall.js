@@ -7,6 +7,7 @@ export default function useAICall() {
   const [intent, setIntent] = useState("");
   const [confidence, setConfidence] = useState(0);
   const [responseText, setResponseText] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
 
   const mediaRecorderRef = useRef(null);
   const streamRef = useRef(null);
@@ -43,7 +44,7 @@ export default function useAICall() {
         if (mediaRecorder.state !== "inactive") {
           mediaRecorder.stop();
         }
-      }, 4000);
+      }, 4900); // stop slightly before 5s to avoid cutting off the end
 
     } catch (error) {
       console.error("Microphone error:", error);
@@ -68,11 +69,20 @@ export default function useAICall() {
       }
 
       const data = await response.json();
+      console.log("API DATA:", data); // 🔥 ADD THIS
 
-      setTranscript(data.transcription);
-      setIntent(data.intent);
-      setConfidence(Math.round((data.confidence || 0) * 100));
-      setResponseText(data.response_text);
+      if (data.transcription) setTranscript(data.transcription);
+      
+      if (data.intent) setIntent(data.intent);
+      if (data.confidence !== undefined) {
+        setConfidence(Math.round(data.confidence * 100));
+      }
+      if (data.response_text) {
+        setResponseText(data.response_text);
+      }
+      if (data.audio_url) {
+        setAudioUrl(data.audio_url);
+      }
 
       if (data.remaining_seconds <= 0) {
         stopAll();
@@ -138,5 +148,6 @@ export default function useAICall() {
     intent,
     confidence,
     responseText,
+    audioUrl
   };
 }

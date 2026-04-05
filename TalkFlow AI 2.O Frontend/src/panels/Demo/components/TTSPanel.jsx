@@ -1,6 +1,6 @@
 import { Volume2, Play } from "lucide-react";
 
-export default function TTSPanel() {
+export default function TTSPanel({ai}) {
   return (
     <div className="bg-white border-gray-400 rounded-xl p-5 shadow-xl">
       <p className="text-blue-600 text-sm flex items-center gap-2 font-bold">
@@ -10,8 +10,7 @@ export default function TTSPanel() {
       <h3 className="font-bold text-lg mt-2">How I responded</h3>
 
       <div className="bg-blue-700 text-white p-4 rounded-xl mt-3">
-        "I've found an available slot for a general check-up tomorrow at 9:00 AM.
-        Would you like me to confirm this booking for you?"
+        "{ai.responseText || '...'}"
       </div>
 
       <p className="text-xs text-gray-400 mt-3">VOICE OUTPUT</p>

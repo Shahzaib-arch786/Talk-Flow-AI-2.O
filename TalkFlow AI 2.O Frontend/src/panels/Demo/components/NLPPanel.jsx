@@ -1,7 +1,7 @@
 import { Brain } from "lucide-react";
 import useAICall from "../hooks/useAICall";
 
-export default function NLPPanel() {
+export default function NLPPanel({ai}) {
   const { intent, entity, category, score } = useAICall();
 
   return (
@@ -15,7 +15,7 @@ export default function NLPPanel() {
       {/* SCORE */}
       <div className="flex justify-center mt-4">
         <div className="w-32 h-32 rounded-full border-4 border-blue-600 flex flex-col items-center justify-center">
-          <p className="text-2xl font-bold">{score}%</p>
+          <p className="text-2xl font-bold">{ai.score || 0}%</p>
           <p className="text-xs text-gray-500">CERTAINTY SCORE</p>
         </div>
       </div>
@@ -23,18 +23,18 @@ export default function NLPPanel() {
       {/* INTENT */}
       <div className="bg-blue-50 p-3 rounded-xl mt-4">
         <p className="text-xs text-blue-600">DETECTED INTENT</p>
-        <p className="font-semibold">{intent}</p>
+        <p className="font-semibold">{ai.intent || "No intent detected"}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-2 mt-3">
         <div className="bg-gray-100 p-2 rounded">
           <p className="text-xs">ENTITY: TIME</p>
-          <p className="text-sm">{entity}</p>
+          <p className="text-sm">{ai.entity || "N/A"}</p>
         </div>
 
         <div className="bg-gray-100 p-2 rounded">
           <p className="text-xs">CATEGORY</p>
-          <p className="text-sm">{category}</p>
+          <p className="text-sm">{ai.category || "N/A"}</p>
         </div>
       </div>
     </div>

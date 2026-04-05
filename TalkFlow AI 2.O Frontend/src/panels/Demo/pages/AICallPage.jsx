@@ -6,12 +6,14 @@ import STTPanel from "../components/STTPanel";
 import NLPPanel from "../components/NLPPanel";
 import TTSPanel from "../components/TTSPanel";
 import FooterNote from "../components/FooterNote";
+import useAICall from "../hooks/useAICall";
 
 export default function AICallPage() {
 
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(null);
   const timerRef = useRef(null);
+  const ai = useAICall();   // 🔥 ONE SOURCE OF TRUTH
 
   useEffect(() => {
     const session = localStorage.getItem("demo_session_id");
@@ -82,12 +84,12 @@ export default function AICallPage() {
           </p>
         </div>
 
-        <SpeakButton />
+        <SpeakButton ai={ai} />
 
         <div className="grid md:grid-cols-3 gap-6 mt-12">
-          <STTPanel />
-          <NLPPanel />
-          <TTSPanel />
+          <STTPanel ai={ai} />
+          <NLPPanel ai={ai} />
+          <TTSPanel ai={ai} />
         </div>
 
         <FooterNote />
