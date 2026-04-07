@@ -106,9 +106,11 @@ export default function SigninForm() {
 
         <p className="text-sm text-center text-gray-500">
           Already have an account?{" "}
-          <span className="text-blue-600 cursor-pointer">
-            Login to your business
-          </span>
+          <a href="/login">
+            <span className="text-blue-600 cursor-pointer">
+              Login to your business
+            </span>
+          </a>
         </p>
       </div>
     </div>
