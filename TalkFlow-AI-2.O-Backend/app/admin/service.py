@@ -59,3 +59,29 @@ def get_dashboard_data(db, business_id):
         "top_intents": top_intents,
         "recent_calls": recent_calls
     }
+
+def get_call_logs(db, skip=0, limit=10):
+    total = db.query(ConversationLog).count()
+
+    logs = db.query(ConversationLog)\
+        .order_by(ConversationLog.created_at.desc())\
+        .offset(skip)\
+        .limit(limit)\
+        .all()
+
+    data = [
+        {
+            "id": f"#TF-{log.id}",
+            "transcript": log.user_text,
+            "intent": log.intent,
+            "confidence": round(log.confidence * 100, 1),
+            "response": log.response_text,
+            "status": "Success"
+        }
+        for log in logs
+    ]
+
+    return {
+        "total": total,
+        "data": data
+    }
