@@ -20,7 +20,7 @@ export default function RecentCallsTable({ data }) {
           {data.map((c, i) => (
             <tr key={i} className="border-t hover:bg-gray-50">
               <td className="text-left">{c.time}</td>
-              <td className="text-left">{c.lang}</td>
+              <td className="text-left">{c.lang=== "EN" ? "Ur" : "Ur"}</td>
               <td>
                 <span className="bg-transparent text-blue-700 px-3 py-1">
                   {c.intent}
