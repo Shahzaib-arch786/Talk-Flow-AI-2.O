@@ -1,55 +1,72 @@
+import { useEffect, useState } from "react";
 import { Phone, Shield, Globe, Zap } from "lucide-react";
 
 export const useDashboard = () => {
-  const stats = [
-    {
-      title: "Total Calls",
-      value: "12,482",
-      tag: "+12%",
-      icon: Phone,
-    },
-    {
-      title: "Avg Confidence",
-      value: "94.2%",
-      tag: "High",
-      icon: Shield,
-    },
-    {
-      title: "Active Languages",
-      value: "EN / UR",
-      tag: "Global",
-      icon: Globe,
-    },
-    {
-      title: "Processing Time",
-      value: "1.2s",
-      tag: "-5%",
-      icon: Zap,
-    },
-  ];
+  const [stats, setStats] = useState([]);
+  const [intents, setIntents] = useState([]);
+  const [calls, setCalls] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const intents = [
-    { name: "Support", percent: 60 },
-    { name: "Billing", percent: 90 },
-    { name: "Inquiry", percent: 70 },
-    { name: "Technical", percent: 60 },
-    { name: "Sales", percent: 40 },
-  ];
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
 
-  const calls = [
-    {
-      time: "2 mins ago",
-      lang: "English",
-      intent: "Support Request",
-      confidence: 98.2,
-    },
-    {
-      time: "15 mins ago",
-      lang: "Urdu",
-      intent: "Billing Inquiry",
-      confidence: 95.1,
-    },
-  ];
+  const fetchDashboard = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/admin/dashboard/1");
+      const data = await res.json();
 
-  return { stats, intents, calls };
+      // 🔹 Stats Cards
+      setStats([
+        {
+          title: "Total Calls",
+          value: data.total_calls,
+          tag: "+12%",
+          icon: Phone,
+        },
+        {
+          title: "Avg Confidence",
+          value: data.avg_confidence + "%",
+          tag: "High",
+          icon: Shield,
+        },
+        {
+          title: "Active Languages",
+          value: data.active_languages.join(" / "),
+          tag: "Global",
+          icon: Globe,
+        },
+        {
+          title: "Processing Time",
+          value: data.avg_processing_time + "s",
+          tag: "-5%",
+          icon: Zap,
+        },
+      ]);
+
+      // 🔹 Intents
+      setIntents(
+        data.top_intents.map((i) => ({
+          name: i.intent,
+          percent: i.percentage,
+        }))
+      );
+
+      // 🔹 Calls
+      setCalls(
+        data.recent_calls.map((c) => ({
+          time: c.time,
+          lang: c.language,
+          intent: c.intent,
+          confidence: c.confidence,
+        }))
+      );
+    } catch (error) {
+      console.error("Dashboard error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { stats, intents, calls, loading };
 };
