@@ -8,6 +8,7 @@ from app.demo.models import DemoUser
 from datetime import datetime
 from app.demo_ai.pipeline import process_voice
 from app.demo_ai.session_store import get_ai_session
+from app.admin.model import ConversationLog
 
 router = APIRouter(prefix="/ai", tags=["AI"])
 
@@ -42,6 +43,24 @@ async def voice_ai(
 
     # 4. Process pipeline
     result = process_voice(temp_audio_path, response_manager, state, session_id)
+    print("AI RESULT 👉", result)   # 👈 MUST PRINT
+    
+    # 5. SAVE TO DATABASE ✅
+    log = ConversationLog(
+    session_id=session_id,
+    business_id=1,
+
+    transcript=result.get("transcription") or "",
+    intent=result.get("intent", ""),
+    confidence=result.get("confidence", 0),
+    response=result.get("response_text") or "",
+    language=result.get("language", "Urdu"),
+    processing_time=result.get("processing_time", 1.2)
+)
+    db.add(log)
+    db.commit()
+    db.refresh(log)
+    print("SAVED TO DB ✅", log.id)   # 👈 MUST PRINT
 
     # 5. Remove temp file
     if os.path.exists(temp_audio_path):
