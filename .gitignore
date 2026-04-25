@@ -15,5 +15,5 @@ TalkFlow AI 2.O Frontend/node_modules/
 TalkFlow-AI-2.O-Backend/talkflow.db
 
 # Generated AI audio files
-static/audio/*
-!static/audio/.gitkeep
+TalkFlow-AI-2.O-Backend/static/audio/*
+!TalkFlow-AI-2.O-Backend/static/audio/.gitkeep
