@@ -1,13 +1,13 @@
 from app.demo_ai.intent.predict import IntentClassifier
 from app.demo_ai.tts.tts_manager import TextToSpeech
-from app.demo_ai.stt.local_whisper import LocalWhisperSTT
 from app.demo_ai.utils.urdu_normalizer import urdu_to_roman
+from app.demo_ai.stt.openai_whisper import OpenAIWhisper
 
 
 # 🔥 Load heavy models ONCE
 intent_model = IntentClassifier()
 tts_engine = TextToSpeech()
-stt_engine = LocalWhisperSTT()   # ← LOADED ONLY ONCE
+stt_engine = OpenAIWhisper()  # ← LOADED ONLY ONCE
 
 
 def process_voice(audio_path: str, response_manager, state, session_id: str):
