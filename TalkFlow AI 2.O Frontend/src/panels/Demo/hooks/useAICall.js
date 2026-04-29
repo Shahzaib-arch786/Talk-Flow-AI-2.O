@@ -2,6 +2,8 @@ import { useState, useRef } from "react";
 
 export default function useAICall() {
   const [isListening, setIsListening] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const [transcript, setTranscript] = useState("");
   const [intent, setIntent] = useState("");
@@ -17,6 +19,7 @@ export default function useAICall() {
 
   // 🎙 Start recording
   const startRecording = async () => {
+    if (isSpeaking || isThinking) return;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
@@ -34,7 +37,9 @@ export default function useAICall() {
         const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
         audioChunks = [];
 
+        setIsThinking(true);
         await sendToBackend(audioBlob);
+        setIsThinking(false);
       };
 
       mediaRecorder.start();
@@ -45,7 +50,6 @@ export default function useAICall() {
           mediaRecorder.stop();
         }
       }, 4900); // stop slightly before 5s to avoid cutting off the end
-
     } catch (error) {
       console.error("Microphone error:", error);
       stopAll();
@@ -72,7 +76,7 @@ export default function useAICall() {
       console.log("API DATA:", data); // 🔥 ADD THIS
 
       if (data.transcription) setTranscript(data.transcription);
-      
+
       if (data.intent) setIntent(data.intent);
       if (data.confidence !== undefined) {
         setConfidence(Math.round(data.confidence * 100));
@@ -89,8 +93,9 @@ export default function useAICall() {
         return;
       }
 
-      playAudio(data.audio_url);
-
+      if (data.audio_url) {
+        playAudio(data.audio_url);
+      }
     } catch (error) {
       console.error("AI call error:", error);
       stopAll();
@@ -104,11 +109,18 @@ export default function useAICall() {
     const audio = new Audio(fullUrl);
     audioRef.current = audio;
 
+    setIsSpeaking(true);
+
     audio.play();
 
     audio.onended = () => {
+      setIsSpeaking(false);
+
+      // 🔥 AUTO LOOP (KEY FEATURE)
       if (isListening) {
-        startRecording();
+        setTimeout(() => {
+          startRecording();
+        }, 500); // slight delay = natural feel
       }
     };
   };
@@ -116,14 +128,18 @@ export default function useAICall() {
   // ⏹ Stop everything
   const stopAll = () => {
     setIsListening(false);
+    setIsThinking(false);
+    setIsSpeaking(false);
 
-    if (mediaRecorderRef.current &&
-        mediaRecorderRef.current.state !== "inactive") {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive"
+    ) {
       mediaRecorderRef.current.stop();
     }
 
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current.getTracks().forEach((track) => track.stop());
     }
 
     if (audioRef.current) {
@@ -143,11 +159,13 @@ export default function useAICall() {
 
   return {
     isListening,
+    isThinking,
+    isSpeaking,
     toggleListening,
     transcript,
     intent,
     confidence,
     responseText,
-    audioUrl
+    audioUrl,
   };
 }

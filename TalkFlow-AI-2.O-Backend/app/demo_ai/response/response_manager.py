@@ -1,199 +1,168 @@
-import yaml
-import random
-from app.demo_ai.entities.extractor import EntityExtractor
+import os
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 class ResponseManager:
+
     def __init__(self):
-        with open("app/demo_ai/response/responses.yaml", "r", encoding="utf-8") as file:
-            self.responses = yaml.safe_load(file)
+        pass
 
-        self.extractor = EntityExtractor()
+    # ==========================
+    # Language Detection
+    # ==========================
+    def is_urdu(self, text: str) -> bool:
+        text_lower = text.lower()
 
-    def user_finished_ordering(self, text):
-        triggers = ["bas", "ho gaya", "complete", "aur nahi", "nahi"]
-        return any(trigger in text.lower() for trigger in triggers)
+        # Urdu script detection
+        if any('\u0600' <= c <= '\u06FF' for c in text):
+            return True
 
-    def is_ordering_sentence(self, text):
-        text = text.lower()
-
-        order_keywords = [
-            "chahiye",
-            "order",
-            "de do",
-            "bhej do",
-            "add",
-            "kardein",
-            "kar dein",
-            "kar do",
-            "Kar dein"
+        # Roman Urdu keywords
+        roman_keywords = [
+            "kya", "hai", "kaise", "mujhe", "tum",
+            "yeh", "kyun", "kar", "raha", "ho", "hain"
         ]
 
-        # If explicit ordering words
-        if any(word in text for word in order_keywords):
-            return True
+        return any(word in text_lower for word in roman_keywords)
 
-        # If contains item name + number
-        if (
-            ("nehari" in text or "cold drink" in text)
-            and any(char.isdigit() for char in text)
-        ):
-            return True
+    # ==========================
+    # Prompt Builder
+    # ==========================
+    def build_system_prompt(self, user_text: str) -> str:
+
+        base_prompt = """
+    You are TalkFlow AI — a real-time voice-based AI assistant.
+
+    You are speaking to a user who is exploring this product for the first time.
+
+    ==============================
+    🎯 YOUR GOAL
+    ==============================
+    - Help the user understand TalkFlow AI
+    - Answer clearly no matter how the question is asked
+    - Demonstrate intelligence, clarity, and confidence
+
+    ==============================
+    🧠 BEHAVIOR RULES
+    ==============================
+    - Understand user intent even if phrasing is unclear
+    - If question is vague → interpret it smartly
+    - If question is incomplete → respond helpfully anyway
+    - Never say “I don’t understand” immediately — try to infer meaning
+
+    ==============================
+    🗣️ LANGUAGE STYLE
+    ==============================
+    - If user speaks Urdu/Roman Urdu → reply in Urdu + English mix
+    - Otherwise use simple English
+    - Keep tone natural and human-like
+
+    ==============================
+    📌 RESPONSE STYLE
+    ==============================
+    - Keep answers concise (2–4 lines)
+    - Explain step-by-step if needed
+    - Use simple examples when helpful
+
+    ==============================
+    🚫 RESTRICTIONS
+    ==============================
+    - Do NOT mention restaurant or old system
+    - Do NOT say “I am an AI model”
+    - Avoid generic answers
+
+    ==============================
+    💡 PRODUCT KNOWLEDGE
+    ==============================
+    TalkFlow AI is a voice-based AI SaaS platform that:
+    - Converts speech to text
+    - Understands user intent using AI
+    - Generates intelligent responses
+    - Converts responses back to voice
+    - Works in real-time conversation loop
+    - Supports Urdu + English
+    - Can be customized for businesses
+
+    ==============================
+    🧪 EXAMPLES
+    ==============================
+
+    User: "yeh kya karta hai?"
+    → Explain simply what TalkFlow AI does
+
+    User: "kaise kaam karta hai?"
+    → Explain step-by-step pipeline
+
+    User: "business ke liye kaise use hoga?"
+    → Explain SaaS + automation
+
+    User: "kya yeh chatbot hai?"
+    → Compare and explain difference
+
+    ==============================
+    IMPORTANT:
+    Always try to understand user intent, even if wording is messy or unclear.
+    """
         
-        # If contains number + possible item words
-        items = self.extractor.extract_items(text)
-        if items:
-            return True
+        if self.is_urdu(user_text):
+            base_prompt += "\nRespond in Urdu + Roman Urdu mix."
+        else:
+            base_prompt += "\nRespond in clear English."
 
-        # If contains item + plate
-        if (
-            ("nehari" in text)
-            and ("half" in text or "full" in text)
-        ):
-            return True
+        return base_prompt
 
-        return False
-
-
+    # ==========================
+    # Main Response Function
+    # ==========================
     def generate_response(self, intent_result: dict, user_text: str, state):
 
-        print(f"[DEBUG] Current Mode: {state.mode}")
+        try:
+            # ✅ Add user message to memory
+            state.add_user_message(user_text)
 
+            # ✅ Build system prompt
+            system_prompt = self.build_system_prompt(user_text)
 
-        intent = intent_result.get("intent")
-        confidence = intent_result.get("confidence", 0)
-        text_lower = user_text.lower()
+            messages = [
+                {"role": "system", "content": system_prompt}
+            ]
 
-        # ==========================================
-        # MODE-BASED STATE MACHINE
-        # ==========================================
+            # ✅ Inject memory (last N messages)
+            messages.extend(state.get_history())
 
-        # ---------------- BOOKING PEOPLE ----------------
-        if state.mode == "booking_people":
-            qty = self.extractor.extract_number(user_text)
-            if qty:
-                state.entities["booking_people"] = qty
-                state.mode = "booking_datetime"
-                return "Date aur time bata dein."
-            return "Kitne logon ke liye table reserve karni hai?"
-
-        # ---------------- BOOKING DATETIME ----------------
-        if state.mode == "booking_datetime":
-            state.entities["booking_datetime"] = user_text
-            people = state.entities.get("booking_people")
-            datetime_value = user_text
-
-            state.mode = "neutral"
-            return (
-                f"Aapka table reserve ho gaya hai 🎉\n\n"
-                f"{people} log\n"
-                f"{datetime_value}"
-                f"\n\nKya aapko aur kuch chahiye?"
+            # ✅ GPT Call
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages,
+                temperature=0.7
             )
 
-        # ---------------- ORDERING MODE ----------------
-        if state.mode == "ordering":
+            ai_text = response.choices[0].message.content.strip()
 
-            if self.user_finished_ordering(user_text):
-                state.mode = "awaiting_confirmation"
-                summary = state.get_cart_summary()
-                return (
-                    f"Aapka final order:\n\n{summary}\n\n"
-                    f"1. Confirm order\n"
-                    f"2. Modify order\n"
-                    f"3. Cancel order"
-                )
+            # ==========================
+            # Response Cleanup
+            # ==========================
 
-            items = self.extractor.extract_items(user_text)
+            # Limit length (voice-friendly)
+            if len(ai_text) > 300:
+                ai_text = ai_text[:300] + "..."
 
-            if items:
-                for item in items:
-                    state.add_to_cart(item)
-                return "Items cart mein add kar di gayi hain 😊\nKya aur kuch chahiye?"
+            # Remove weird formatting
+            ai_text = ai_text.replace("\n\n", "\n")
 
-            return "Kya aur kuch add karna hai?"
+            # ==========================
+            # Save AI response to memory
+            # ==========================
+            state.add_ai_message(ai_text)
 
-        # ---------------- AWAITING CONFIRMATION ----------------
-        if state.mode == "awaiting_confirmation":
+            return ai_text
 
-            if text_lower in ["1", "confirm", "haan", "yes"]:
-                state.mode = "awaiting_service_type"
-                return "Delivery ya dine-in?"
+        except Exception as e:
+            print("GPT ERROR:", e)
 
-            if text_lower in ["2", "modify"]:
-                state.mode = "ordering"
-                return "Ji batayein kya change karna hai?"
+            # Fallback response
+            fallback = "Sorry, thori technical issue ho raha hai. Aap dobara try karein."
 
-            if text_lower in ["3", "cancel"]:
-                state.reset_order()
-                return "Order cancel kar diya gaya hai."
-
-            return "1. Confirm order\n2. Modify order\n3. Cancel order"
-
-        # ---------------- SERVICE TYPE ----------------
-        if state.mode == "awaiting_service_type":
-
-            if "delivery" in text_lower:
-                state.mode = "awaiting_address"
-                return "Apna complete address share karein."
-
-            if "dine" in text_lower:
-                summary = state.get_cart_summary()
-                state.reset_order()
-                return f"Aapka order confirm ho gaya 🎉\n\n{summary}\n\nDine-in select kiya gaya hai."
-
-            return "Delivery ya dine-in?"
-
-        # ---------------- ADDRESS MODE ----------------
-        if state.mode == "awaiting_address":
-            summary = state.get_cart_summary()
-            address = user_text
-            state.reset_order()
-            return f"Order confirm ho gaya 🎉\n\n{summary}\n\nDelivery address:{address}"
-
-        # ==========================================
-        # NEUTRAL MODE LOGIC
-        # ==========================================
-
-        if state.mode == "neutral":
-
-            # Booking trigger
-            if "table" in text_lower:
-                state.mode = "booking_people"
-                return "Kitne logon ke liye table reserve karni hai?"
-
-            # Ordering trigger
-            if self.is_ordering_sentence(user_text):
-                items = self.extractor.extract_items(user_text)
-
-                if items:
-                    state.mode = "ordering"
-                    for item in items:
-                        state.add_to_cart(item)
-                    return "Items cart mein add kar di gayi hain 😊\nKya aur kuch chahiye?"
-
-                state.mode = "ordering"
-                return "Kya order karna chahte hain?"
-            
-            if text_lower in ["yes", "haan"]:
-                state.mode = "neutral"
-                return "Ji, Shukriya!"
-
-        # ==========================================
-        # LOW CONFIDENCE
-        # ==========================================
-
-        if intent == "unknown" or confidence < 0.50:
-            return "Maaf kijiye, kya aap dobara wazeh kar sakte hain?"
-
-        # ==========================================
-        # NORMAL INTENT
-        # ==========================================
-
-        if intent == "greeting":
-            return random.choice(self.responses["greeting"])
-
-        if intent in self.responses:
-            return random.choice(self.responses[intent])
-
-        return "Maaf kijiye, samajh nahi aaya."
+            return fallback

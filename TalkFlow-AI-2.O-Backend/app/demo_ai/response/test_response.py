@@ -1,9 +1,7 @@
-from app.demo_ai.intent.predict import IntentClassifier
 from app.demo_ai.response.response_manager import ResponseManager
 from app.demo_ai.memory.conversation_state import ConversationManager
 
 # Initialize modules
-intent_model = IntentClassifier()
 response_manager = ResponseManager()
 conversation_manager = ConversationManager()
 
@@ -22,7 +20,10 @@ while True:
     state = conversation_manager.get_state(session_id)
 
     # Predict intent
-    intent_result = intent_model.predict(user_input)
+    intent_result = {
+        "intent": "general",
+        "confidence": 0.9
+    }
 
     print("Intent Result:", intent_result)
 
