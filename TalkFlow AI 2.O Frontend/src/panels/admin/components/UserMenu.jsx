@@ -1,4 +1,4 @@
-import { Bell } from "lucide-react";
+import { Bell, RefreshCw, MessageSquare } from "lucide-react";
 import { useState, useRef } from "react";
 import useAuthUser from "../hooks/useAuthUser";
 import useNotifications from "../hooks/useNotifications";
@@ -22,18 +22,27 @@ export default function UserMenu() {
   return (
     <div className="relative flex items-center gap-4">
       {/* Notifications */}
-      <div className="relative">
+      <div className="relative gap-4  flex items-center">
         <button onClick={toggleNotif} className="relative">
           <Bell className="text-gray-600 hover:text-blue-600" />
           {notifications.length > 0 && (
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
           )}
         </button>
+        <button>
+          <RefreshCw
+            className="text-gray-600 hover:text-blue-600 ml-2"
+            onClick={() => window.location.reload()}
+          />
+        </button>
+        <button>
+          <MessageSquare className="text-gray-600 hover:text-blue-600 ml-2" />
+        </button>
 
-        <NotificationPanel
-          open={notifOpen}
-          notifications={notifications}
-        />
+        
+          <NotificationPanel open={notifOpen} notifications={notifications} />
+          
+        
       </div>
 
       {/* User */}
@@ -48,8 +57,12 @@ export default function UserMenu() {
             alt={admin?.full_name || "admin avatar"}
           />
           <div>
-            <p className="text-sm font-semibold">{admin ? admin.full_name: "Loading"}</p>
-            <p className="text-xs text-gray-500">{admin ? admin.role : "Admin"}</p>
+            <p className="text-sm font-semibold">
+              {admin ? admin.full_name : "Loading"}
+            </p>
+            <p className="text-xs text-gray-500">
+              {admin ? admin.role : "Admin"}
+            </p>
           </div>
         </div>
 

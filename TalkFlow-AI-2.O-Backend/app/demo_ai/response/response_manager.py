@@ -30,6 +30,9 @@ class ResponseManager:
     # ==========================
     # Prompt Builder
     # ==========================
+
+    
+
     def build_system_prompt(self, user_text: str) -> str:
 
         base_prompt = """

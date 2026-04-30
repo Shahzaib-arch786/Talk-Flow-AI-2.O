@@ -11,6 +11,9 @@ from app.demo.routes import router as demo_router
 from fastapi.staticfiles import StaticFiles
 from app.demo_ai.routes import router as ai_router
 from app.admin.route import router as admin_router
+from app.admin.business_routes import router as business_router
+from app.business_ai.routes import router as business_ai_router
+
 
 load_dotenv()
 
@@ -45,6 +48,8 @@ app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(demo_router)
 app.include_router(ai_router)
 app.include_router(admin_router)
+app.include_router(business_router)
+app.include_router(business_ai_router)
 # app.include_router(admin_router, prefix="/admin", tags=["Admin"], dependencies=[Depends(get_current_user)])
 
 # Root route

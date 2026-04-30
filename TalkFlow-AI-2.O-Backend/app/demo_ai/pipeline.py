@@ -54,7 +54,7 @@ def process_voice(audio_path: str, response_manager, state, session_id: str):
         response_text = response_manager.generate_response(
             intent_result,
             transcription,   # use original for better GPT understanding
-            state
+            state,
         )
 
         print("AI Response:", response_text)

@@ -8,9 +8,12 @@ import { useDashboard } from "../hooks/useDashboard";
 import { useState } from "react";
 import { useEffect } from "react";
 import { isAuthenticated } from "../../../utils/auth";
+import CallTrendChart from "../components/CallTrendChart";
+import IntentDonutChart from "../components/IntentDonutChart";
 
 export default function DashboardPage() {
-  const { stats, intents, calls } = useDashboard();
+  const { stats, intents, calls, trendData, intentDistribution } =
+    useDashboard();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [admin, setAdmin] = useState(null);
@@ -45,10 +48,30 @@ export default function DashboardPage() {
         localStorage.removeItem("token");
         window.location.href = "/login";
       }
-    }
+    };
 
     fetchAdmin();
   }, []);
+
+  const fetchBusiness = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://127.0.0.1:8000/admin/business/1", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    setBusiness(data.business);
+  };
+
+  useEffect(() => {
+    if (admin) {
+      fetchBusiness();
+    }
+  }, [admin]);
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
@@ -58,12 +81,23 @@ export default function DashboardPage() {
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
         <div className="p-6 space-y-6">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h1 className="text-2xl font-bold">Executive Overview</h1>
-            <p className="text-gray-500">
-              Track and optimize your AI communication performance.
-            </p>
-          </motion.div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <h1 className="text-3xl font-bold">Analytics Overview</h1>
+              <p className="text-gray-500 mt-1">
+                Real-time performance metrics for your AI voice agents.
+              </p>
+            </motion.div>
+            <div className="flex justify-end gap-3">
+              <button className="px-4 py-2 border rounded-lg text-sm">
+                Last 7 Days
+              </button>
+
+              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">
+                Export PDF
+              </button>
+            </div>
+          </div>
 
           {/* STATS */}
           <div className="grid md:grid-cols-4 gap-4">
@@ -72,10 +106,17 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <IntentsCard data={intents} />
-            <RecentCallsTable data={calls} />
+          {/* Charts Section */}
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="md:col-span-2">
+              <CallTrendChart data={trendData} />
+            </div>
+
+            <IntentDonutChart data={intentDistribution} />
           </div>
+
+          {/* Table */}
+          <RecentCallsTable data={calls} />
         </div>
       </div>
     </div>

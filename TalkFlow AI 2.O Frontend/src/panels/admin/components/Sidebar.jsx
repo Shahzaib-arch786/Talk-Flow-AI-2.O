@@ -5,7 +5,9 @@ import { NavLink } from "react-router-dom";
 export default function Sidebar({ open, onClose }) {
   const items = [
     { name: "Dashboard", icon: LayoutDashboard, active: true, path: "/admin/dashboard" },
-    { name: "AI Knowledge", icon: BarChart2, path: "/admin/knowledge" },
+    { name: "My Business", icon: BarChart2, path: "/admin/my-business" },
+    { name: "Knowledge Base", icon: BarChart2, path: "/admin/knowledge" },
+    { name: "Test AI", icon: BarChart2, path: "/admin/test-ai" },
     { name: "Call Logs", icon: Mic, path: "/admin/call-logs" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
   ];
@@ -86,6 +88,11 @@ function SidebarContent({ items, onItemClick }) {
           </NavLink>
         ))}
       </nav>
+      <div>
+        <p className="text-sm text-center flex items-center gap-2 text-gray-400 mt-30">
+          <BarChart2 /> Help Center
+        </p>
+      </div>
     </>
   );
 }

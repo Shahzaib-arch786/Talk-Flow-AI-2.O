@@ -4,6 +4,9 @@ export default function StatCard({ icon: Icon, title, value, tag }) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
       className="bg-white p-6 rounded-lg border-gray-200 border shadow-sm cursor-pointer"
     >
       <div className="flex justify-between">

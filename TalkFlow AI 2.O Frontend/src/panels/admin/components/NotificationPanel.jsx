@@ -8,7 +8,7 @@ export default function NotificationPanel({ open, notifications }) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute -right-10 mt-3 w-72 bg-white border-gray-200 border rounded-lg shadow-lg z-50"
+          className="absolute -right-10 md:mt-70 mt-4 w-72 bg-white border-gray-200 border rounded-lg shadow-lg z-50"
         >
           <div className="p-4 border-b font-semibold">
             Notifications

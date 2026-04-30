@@ -6,6 +6,9 @@ export const useDashboard = () => {
   const [intents, setIntents] = useState([]);
   const [calls, setCalls] = useState([]);
   const [loading, setLoading] = useState(true);
+  // ADD THESE STATES
+  const [trendData, setTrendData] = useState([]);
+  const [intentDistribution, setIntentDistribution] = useState([]);
 
   useEffect(() => {
     fetchDashboard();
@@ -44,12 +47,29 @@ export const useDashboard = () => {
         },
       ]);
 
+      setTrendData([
+        { day: "Mon", inbound: 120, outbound: 40 },
+        { day: "Tue", inbound: 200, outbound: 60 },
+        { day: "Wed", inbound: 280, outbound: 80 },
+        { day: "Thu", inbound: 180, outbound: 70 },
+        { day: "Fri", inbound: 240, outbound: 90 },
+        { day: "Sat", inbound: 90, outbound: 30 },
+        { day: "Sun", inbound: 60, outbound: 20 },
+      ]);
+
+      setIntentDistribution(
+        data.top_intents.map((i) => ({
+          name: i.intent,
+          value: i.percentage,
+        })),
+      );
+
       // 🔹 Intents
       setIntents(
         data.top_intents.map((i) => ({
           name: i.intent,
           percent: i.percentage,
-        }))
+        })),
       );
 
       // 🔹 Calls
@@ -59,7 +79,7 @@ export const useDashboard = () => {
           lang: c.language,
           intent: c.intent,
           confidence: c.confidence,
-        }))
+        })),
       );
     } catch (error) {
       console.error("Dashboard error:", error);
@@ -68,5 +88,5 @@ export const useDashboard = () => {
     }
   };
 
-  return { stats, intents, calls, loading };
+  return { stats, intents, calls, loading, trendData, intentDistribution };
 };
