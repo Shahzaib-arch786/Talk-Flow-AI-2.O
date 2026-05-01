@@ -43,6 +43,14 @@ export default function ChatPanel({ ai }) {
     });
 
     setIsTyping(false);
+    ai.setAnalysis({
+      mode: "chat",
+      intent: "Business Query",
+      confidence: 96,
+      response: aiText,
+      latency: "1.2s",
+      tokens: Math.floor(aiText.length / 4),
+    });
   };
 
   return (
@@ -88,11 +96,11 @@ export default function ChatPanel({ ai }) {
         {/* ✨ Typing Indicator */}
         {isTyping && (
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
+            {/* <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
               AI
-            </div>
+            </div> */}
 
-            <div className="bg-white px-4 py-2 rounded-2xl border shadow-sm flex gap-1">
+            <div className="bg-white px-4 py-2 rounded-2xl shadow-sm flex gap-1">
               <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
               <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></span>
               <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></span>

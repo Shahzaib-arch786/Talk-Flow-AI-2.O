@@ -12,6 +12,9 @@ export default function TestAIPage() {
   const ai = useAI({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mode, setMode] = useState("chat");
+  // const [messages, setMessages] = useState([]);
+  // const [analysis, setAnalysis] = useState(null);
+  // const [voiceLoading, setVoiceLoading] = useState(false);
 
   return (
     <div className="flex bg-gray-100 min-h-screen">

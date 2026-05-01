@@ -1,5 +1,5 @@
 export const streamAI = async (text, onChunk, token) => {
-  const res = await fetch("http://127.0.0.1:8000/ai/text-stream", {
+  const res = await fetch("http://127.0.0.1:8000/business-ai/text-stream", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,

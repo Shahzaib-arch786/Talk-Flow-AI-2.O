@@ -1,5 +1,5 @@
 export async function streamAI(text, token, onChunk) {
-  const res = await fetch("http://127.0.0.1:8000/ai/text-stream", {
+  const res = await fetch("http://127.0.0.1:8000/business-ai/text-stream", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

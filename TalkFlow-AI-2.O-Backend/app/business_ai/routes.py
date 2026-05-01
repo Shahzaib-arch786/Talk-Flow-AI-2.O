@@ -16,7 +16,11 @@ from app.admin.business_service import get_business_data
 
 
 
-router = APIRouter(prefix="/ai", tags=["Business AI"])
+
+router = APIRouter(
+    prefix="/business-ai",
+    tags=["Business AI"]
+)
 
 
 class TextRequest(BaseModel):
@@ -27,33 +31,40 @@ class TextRequest(BaseModel):
 async def voice_ai(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
+    try:
+        print("VOICE ROUTE HIT")
 
-    session_id = str(current_user.id)
+        session_id = str(current_user.id)
 
-    temp_audio_path = f"temp_{session_id}.webm"
+        temp_audio_path = f"temp_{session_id}.webm"
 
-    with open(temp_audio_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        # save uploaded file
+        with open(temp_audio_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
-    session_data = get_ai_session(session_id)
-    state = session_data["state"]
+        session_data = get_ai_session(session_id)
+        state = session_data["state"]
 
-    # 🔥 Updated call
-    result = process_voice_business(
-        temp_audio_path,
-        state,
-        session_id,
-        db,
-        current_user
-    )
+        result = process_voice_business(
+            temp_audio_path,
+            state,
+            session_id,
+            db,
+            current_user
+        )
 
-    if os.path.exists(temp_audio_path):
-        os.remove(temp_audio_path)
+        if os.path.exists(temp_audio_path):
+            os.remove(temp_audio_path)
 
-    return result
+        return result
 
+    except Exception as e:
+        print("VOICE ERROR:", e)
+        return {
+            "error": str(e)
+        }
 
 @router.post("/text")
 def text_ai(
