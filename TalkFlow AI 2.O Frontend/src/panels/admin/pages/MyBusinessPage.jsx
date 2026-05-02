@@ -205,7 +205,7 @@ export default function MyBusinessPage() {
               <div className="bg-white p-5 rounded-2xl border shadow-sm">
                 <h3 className="font-semibold mb-4">Saved Businesses</h3>
 
-                <div className="space-y-3 max-h-[300px] overflow-y-auto">
+                <div className="space-y-3 max-h-75 overflow-y-auto">
                   {business?.length > 0 ? (
                     business.map((item) => (
                       <div

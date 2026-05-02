@@ -42,7 +42,7 @@ export default function TTSPanel({ ai }) {
         AI Response
       </h3>
 
-      <div className="mt-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl p-5 min-h-[140px]">
+      <div className="mt-5 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-2xl p-5 min-h-35">
         <p className="leading-relaxed">
           {ai.responseText || "Waiting for AI response..."}
         </p>

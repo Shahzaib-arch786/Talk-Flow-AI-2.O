@@ -55,7 +55,7 @@ export default function NLPPanel({ ai }) {
 
       {/* Confidence Circle */}
       <div className="flex justify-center mt-6">
-        <div className="relative w-36 h-36 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 p-1">
+        <div className="relative w-36 h-36 rounded-full bg-linear-to-r from-blue-600 to-purple-600 p-1">
           <div className="w-full h-full rounded-full bg-white flex flex-col justify-center items-center">
             <p className="text-3xl font-bold">
               {ai.confidence || 0}%
