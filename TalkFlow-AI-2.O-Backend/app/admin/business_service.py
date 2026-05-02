@@ -6,11 +6,19 @@ from app.admin.business_model import Business, KnowledgeBase
 # ==========================
 def create_business(db, data, current_user):
 
+    # deactivate old businesses
+    db.query(Business).filter_by(
+        user_id=current_user.id
+    ).update({
+        "is_active": False
+    })
+
     business = Business(
         name=data["name"],
         description=data.get("description", ""),
         language=data.get("language", "EN"),
-        user_id=current_user.id  # 🔥 LINK TO USER
+        user_id=current_user.id,
+        is_active=True
     )
 
     db.add(business)
@@ -52,4 +60,59 @@ def get_business_data(db, business_id):
     return {
         "business": business,
         "knowledge": knowledge
+    }
+
+
+# ==========================
+# GET ALL BUSINESSES
+# ==========================
+def get_all_businesses(db, current_user):
+    return db.query(Business).filter_by(
+        user_id=current_user.id
+    ).order_by(Business.created_at.desc()).all()
+
+
+# ==========================
+# DELETE BUSINESS
+# ==========================
+def delete_business(db, business_id, current_user):
+
+    business = db.query(Business).filter_by(
+        id=business_id,
+        user_id=current_user.id
+    ).first()
+
+    if not business:
+        raise Exception("Business not found")
+
+    # delete knowledge first
+    db.query(KnowledgeBase).filter_by(
+        business_id=business_id
+    ).delete()
+
+    db.delete(business)
+    db.commit()
+
+    return {
+        "message": "Business deleted successfully"
+    }
+
+
+# ==========================
+# DELETE KNOWLEDGE
+# ==========================
+def delete_knowledge(db, knowledge_id):
+
+    knowledge = db.query(KnowledgeBase).filter_by(
+        id=knowledge_id
+    ).first()
+
+    if not knowledge:
+        raise Exception("Knowledge not found")
+
+    db.delete(knowledge)
+    db.commit()
+
+    return {
+        "message": "Knowledge deleted successfully"
     }

@@ -80,7 +80,8 @@ def text_ai(
 
     # ✅ get business
     business = db.query(Business).filter_by(
-        user_id=current_user.id
+        user_id=current_user.id,
+        is_active=True
     ).first()
 
     if not business:
@@ -119,7 +120,8 @@ def text_stream(
     state = session_data["state"]
 
     business = db.query(Business).filter_by(
-        user_id=current_user.id
+        user_id=current_user.id,
+        is_active=True
     ).first()
 
     business_data = get_business_data(db, business.id)

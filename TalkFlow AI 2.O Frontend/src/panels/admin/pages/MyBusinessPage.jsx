@@ -3,9 +3,11 @@ import Topbar from "../components/Topbar";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Play, User2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function MyBusinessPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -24,21 +26,28 @@ export default function MyBusinessPage() {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://127.0.0.1:8000/admin/business/me", {
+      const res = await fetch("http://127.0.0.1:8000/admin/business/all", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       const data = await res.json();
+
+      // all businesses list
       setBusiness(data);
 
-      setForm({
-        name: data.name || "",
-        description: data.description || "",
-        language: data.language || "English (United States)",
-        timezone: data.timezone || "Eastern Time (ET)",
-      });
+      // active business autofill form
+      const activeBusiness = data.find((b) => b.is_active);
+
+      if (activeBusiness) {
+        setForm({
+          name: activeBusiness.name || "",
+          description: activeBusiness.description || "",
+          language: activeBusiness.language || "English",
+          timezone: "GMT",
+        });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -61,7 +70,30 @@ export default function MyBusinessPage() {
         body: JSON.stringify(form),
       });
 
-      alert("Saved!");
+      alert("Business saved successfully");
+
+      // refresh businesses
+      fetchBusiness();
+
+      // move to knowledge page
+      navigate("/admin/knowledge");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteBusiness = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await fetch(`http://127.0.0.1:8000/admin/business/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      fetchBusiness();
     } catch (err) {
       console.error(err);
     }
@@ -69,37 +101,33 @@ export default function MyBusinessPage() {
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      
       {/* SIDEBAR */}
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex-1">
-        
         {/* TOPBAR */}
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
         {/* CONTENT */}
         <div className="p-6 space-y-6">
-
           {/* HEADER */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <h1 className="text-3xl font-bold">My Business</h1>
               <p className="text-gray-500 mt-1">
-                Manage your business profile and AI voice configuration parameters.
+                Manage your business profile and AI voice configuration
+                parameters.
               </p>
             </motion.div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-
             {/* LEFT FORM */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="md:col-span-2 bg-white p-6 rounded-2xl border shadow-sm space-y-4"
             >
-
               {/* NAME */}
               <div>
                 <label className="text-xs text-gray-500">BUSINESS NAME</label>
@@ -129,7 +157,9 @@ export default function MyBusinessPage() {
               {/* DROPDOWNS */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs text-gray-500">PRIMARY LANGUAGE</label>
+                  <label className="text-xs text-gray-500">
+                    PRIMARY LANGUAGE
+                  </label>
                   <select
                     name="language"
                     value={form.language}
@@ -142,7 +172,9 @@ export default function MyBusinessPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500">DEFAULT TIMEZONE</label>
+                  <label className="text-xs text-gray-500">
+                    DEFAULT TIMEZONE
+                  </label>
                   <select
                     name="timezone"
                     value={form.timezone}
@@ -169,24 +201,44 @@ export default function MyBusinessPage() {
 
             {/* RIGHT SIDE */}
             <div className="space-y-4">
-
               {/* BUSINESS INFO CARD */}
               <div className="bg-white p-5 rounded-2xl border shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-200 rounded-xl" />
-                  <div>
-                    <h3 className="font-semibold">{form.name}</h3>
-                    <p className="text-green-500 text-sm">● Active Account</p>
-                  </div>
-                </div>
+                <h3 className="font-semibold mb-4">Saved Businesses</h3>
 
-                <div className="mt-4 space-y-2 text-sm text-gray-600">
-                  <p>Organization ID: TF-88219-X</p>
-                  <p>Created On: Oct 12, 2023</p>
-                  <p>
-                    Plan: <span className="text-blue-600">Enterprise Plus</span>
-                  </p>
-                  <p>Agents: 24 active</p>
+                <div className="space-y-3 max-h-[300px] overflow-y-auto">
+                  {business?.length > 0 ? (
+                    business.map((item) => (
+                      <div
+                        key={item.id}
+                        className="border rounded-xl p-3 flex justify-between items-center"
+                      >
+                        <div>
+                          <h4 className="font-medium">{item.name}</h4>
+
+                          <p className="text-xs text-gray-500">
+                            {item.is_active ? (
+                              <span className="text-green-600 font-medium">
+                                Active Business
+                              </span>
+                            ) : (
+                              "Inactive"
+                            )}
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => deleteBusiness(item.id)}
+                          className="text-red-500 text-sm"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-400">
+                      No businesses created yet
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -198,7 +250,8 @@ export default function MyBusinessPage() {
                 </div>
 
                 <p className="text-sm text-gray-500">
-                  Your current business settings are optimized for a professional voice profile.
+                  Your current business settings are optimized for a
+                  professional voice profile.
                 </p>
 
                 <button className="mt-4 flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-xl">
@@ -217,7 +270,6 @@ export default function MyBusinessPage() {
                   Contact Support →
                 </button>
               </div>
-
             </div>
           </div>
         </div>

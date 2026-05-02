@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+
+
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
 from datetime import datetime
 from app.core.database import Base
 
@@ -14,6 +16,8 @@ class Business(Base):
     name = Column(String, nullable=False)
     description = Column(Text)
     language = Column(String, default="EN")
+
+    is_active = Column(Boolean, default=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 

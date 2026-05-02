@@ -2,27 +2,55 @@ import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Plus, Download, Filter } from "lucide-react";
+import { Plus, Download, Filter, Trash2, Pencil } from "lucide-react";
 import AddKnowledgeModal from "../components/AddKnowledgeModel";
+import { useNavigate } from "react-router-dom";
 
 export default function KnowledgeBasePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
+  const [activeBusiness, setActiveBusiness] = useState(null);
 
   useEffect(() => {
-    fetchKnowledge();
+    fetchActiveBusiness();
   }, []);
 
-  const BUSINESS_ID = 1; // temporary (later dynamic)
-
-  const fetchKnowledge = async () => {
+  const fetchActiveBusiness = async () => {
     try {
       const token = localStorage.getItem("token");
 
+      const res = await fetch("http://127.0.0.1:8000/admin/business/all", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const businesses = await res.json();
+
+      const active = businesses.find((b) => b.is_active);
+
+      if (active) {
+        setActiveBusiness(active);
+        fetchKnowledge(active.id);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchKnowledge = async (businessId = activeBusiness?.id) => {
+    try {
+      if (!businessId) {
+        console.log("No business id found");
+        return;
+      }
+      const token = localStorage.getItem("token");
+
       const res = await fetch(
-        `http://127.0.0.1:8000/admin/business/${BUSINESS_ID}`,
+        `http://127.0.0.1:8000/admin/business/${businessId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,6 +61,7 @@ export default function KnowledgeBasePage() {
       const response = await res.json();
 
       const formatted = response.knowledge.map((k) => ({
+        id: k.id,
         question: k.question,
         answer: k.answer,
         tag: "GENERAL",
@@ -43,6 +72,36 @@ export default function KnowledgeBasePage() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const deleteKnowledge = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        `http://127.0.0.1:8000/admin/dashboard/knowledge/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Delete failed");
+      }
+
+      fetchKnowledge();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const editKnowledge = (item) => {
+    console.log("Edit:", item);
+
+    // later open edit modal
   };
 
   return (
@@ -69,7 +128,7 @@ export default function KnowledgeBasePage() {
               </p>
             </motion.div>
 
-            <div className="flex flex-wrap gap-3 md:justify-end">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:justify-end w-full md:w-auto">
               {/* PRIMARY CTA */}
               <button
                 onClick={() => setOpenModal(true)}
@@ -102,6 +161,12 @@ export default function KnowledgeBasePage() {
                 <Download size={18} />
                 Upload Document
               </button>
+              <button
+                onClick={() => navigate("/admin/test-ai")}
+                className="bg-blue-600 text-white px-5 py-2 rounded-xl"
+              >
+                Proceed To Test AI
+              </button>
             </div>
           </div>
 
@@ -112,7 +177,7 @@ export default function KnowledgeBasePage() {
             className="bg-white rounded-2xl border shadow-sm"
           >
             {/* TOP BAR */}
-            <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between p-4 border-b">
               <div className="flex gap-3">
                 <span className="text-sm bg-gray-100 px-3 py-1 rounded-lg">
                   Total Entries: <b>{total}</b>
@@ -133,7 +198,7 @@ export default function KnowledgeBasePage() {
             </div>
 
             {/* TABLE */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto scrollbar-hide">
               <table className="w-full text-sm">
                 <thead className="text-gray-400 border-b">
                   <tr>
@@ -145,6 +210,12 @@ export default function KnowledgeBasePage() {
                 </thead>
 
                 <tbody>
+                  {/* <tr>
+                    <td colSpan="4" className="text-center py-10 text-gray-400">
+                      No knowledge added yet. Start training your AI.
+                    </td>
+                  </tr>
+                  ) : ( */}
                   {data.map((item, i) => (
                     <tr
                       key={i}
@@ -162,7 +233,23 @@ export default function KnowledgeBasePage() {
                         </span>
                       </td>
 
-                      <td className="p-4 text-gray-400 cursor-pointer">⋮</td>
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => editKnowledge(item)}
+                            className="text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition"
+                          >
+                            <Pencil size={16} />
+                          </button>
+
+                          <button
+                            onClick={() => deleteKnowledge(item.id)}
+                            className="text-red-600 hover:bg-red-50 p-2 rounded-lg transition"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -192,6 +279,7 @@ export default function KnowledgeBasePage() {
       </div>
       <AddKnowledgeModal
         open={openModal}
+        businessId={activeBusiness?.id}
         onClose={() => setOpenModal(false)}
         onSuccess={fetchKnowledge}
       />

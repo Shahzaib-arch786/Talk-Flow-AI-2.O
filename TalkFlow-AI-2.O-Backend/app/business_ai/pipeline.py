@@ -39,7 +39,8 @@ def process_voice_business(
         # 2️⃣ GET USER BUSINESS
         # ==========================
         business = db.query(Business).filter_by(
-            user_id=current_user.id
+            user_id=current_user.id,
+            is_active=True
         ).first()
 
         if not business:

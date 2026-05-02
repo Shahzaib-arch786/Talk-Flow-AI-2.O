@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function AddKnowledgeModal({ open, onClose, onSuccess }) {
+export default function AddKnowledgeModal({ open, onClose, onSuccess, businessId }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [tag, setTag] = useState("");
@@ -17,7 +17,7 @@ export default function AddKnowledgeModal({ open, onClose, onSuccess }) {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          business_id: 1,
+          business_id: businessId,
           question,
           answer,
           tag,
