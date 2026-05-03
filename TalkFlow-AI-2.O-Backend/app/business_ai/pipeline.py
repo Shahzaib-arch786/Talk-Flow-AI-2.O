@@ -60,7 +60,8 @@ def process_voice_business(
             {"intent": "general", "confidence": 0.9},
             transcription,
             state,
-            business_data
+            business_data,
+            db
         )
 
         print("AI:", response_text)

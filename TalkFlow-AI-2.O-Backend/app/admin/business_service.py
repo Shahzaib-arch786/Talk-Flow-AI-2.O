@@ -50,16 +50,30 @@ def add_knowledge(db, data):
 # GET BUSINESS DATA (🔥 IMPORTANT)
 # ==========================
 def get_business_data(db, business_id):
-
-    business = db.query(Business).filter_by(id=business_id).first()
+    business = db.query(Business).filter_by(
+        id=business_id
+    ).first()
 
     knowledge = db.query(KnowledgeBase).filter_by(
         business_id=business_id
     ).all()
 
     return {
-        "business": business,
-        "knowledge": knowledge
+        "business": {
+            "id": business.id,
+            "name": business.name,
+            "description": business.description,
+            "language": business.language,
+        } if business else None,
+
+        "knowledge": [
+            {
+                "id": item.id,
+                "question": item.question,
+                "answer": item.answer
+            }
+            for item in knowledge
+        ]
     }
 
 
