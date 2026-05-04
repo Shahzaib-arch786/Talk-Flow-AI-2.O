@@ -173,7 +173,7 @@ export default function KnowledgeBasePage() {
             </div>
 
             <button
-              onClick={() => navigate("/admin/test-ai")}
+              onClick={() => navigate("/admin/automation")}
               className="
       w-full sm:w-auto
       bg-blue-600 hover:bg-blue-700
@@ -183,7 +183,7 @@ export default function KnowledgeBasePage() {
       transition
     "
             >
-              Test AI Model
+              Make Automations
             </button>
           </div>
 

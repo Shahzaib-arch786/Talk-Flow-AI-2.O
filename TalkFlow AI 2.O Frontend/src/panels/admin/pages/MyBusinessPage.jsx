@@ -61,7 +61,7 @@ export default function MyBusinessPage() {
     try {
       const token = localStorage.getItem("token");
 
-      await fetch("http://127.0.0.1:8000/admin/business/create", {
+      const res = await fetch("http://127.0.0.1:8000/admin/business/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,6 +69,10 @@ export default function MyBusinessPage() {
         },
         body: JSON.stringify(form),
       });
+
+      const newBusiness = await res.json();
+
+      localStorage.setItem("activeBusinessId", newBusiness.id);
 
       alert("Business saved successfully");
 
@@ -92,6 +96,12 @@ export default function MyBusinessPage() {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      const activeId = localStorage.getItem("activeBusinessId");
+
+      if (Number(activeId) === id) {
+        localStorage.removeItem("activeBusinessId");
+      }
 
       fetchBusiness();
     } catch (err) {

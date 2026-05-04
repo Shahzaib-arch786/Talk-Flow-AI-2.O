@@ -1,5 +1,7 @@
 from app.admin.business_model import Business, KnowledgeBase
-
+from app.rag.model import DocumentChunk
+from app.actions.model import BusinessAction, ActionRequest
+from app.admin.model import ConversationLog
 
 # ==========================
 # CREATE BUSINESS
@@ -90,27 +92,58 @@ def get_all_businesses(db, current_user):
 # DELETE BUSINESS
 # ==========================
 def delete_business(db, business_id, current_user):
+    try:
+        business = db.query(Business).filter_by(
+            id=business_id,
+            user_id=current_user.id
+        ).first()
 
-    business = db.query(Business).filter_by(
-        id=business_id,
-        user_id=current_user.id
-    ).first()
+        if not business:
+            return {
+                "message": "Business not found"
+            }
 
-    if not business:
-        raise Exception("Business not found")
+        # delete knowledge base
+        db.query(KnowledgeBase).filter_by(
+            business_id=business_id
+        ).delete()
 
-    # delete knowledge first
-    db.query(KnowledgeBase).filter_by(
-        business_id=business_id
-    ).delete()
+        # delete uploaded documents
+        db.query(DocumentChunk).filter_by(
+            business_id=business_id
+        ).delete()
 
-    db.delete(business)
-    db.commit()
+        # delete actions
+        db.query(BusinessAction).filter_by(
+            business_id=business_id
+        ).delete()
 
-    return {
-        "message": "Business deleted successfully"
-    }
+        # delete action requests
+        db.query(ActionRequest).filter_by(
+            business_id=business_id
+        ).delete()
 
+        # delete conversation logs
+        db.query(ConversationLog).filter_by(
+            business_id=business_id
+        ).delete()
+
+        # delete business
+        db.delete(business)
+
+        db.commit()
+
+        return {
+            "message": "Business deleted successfully"
+        }
+
+    except Exception as e:
+        db.rollback()
+        print("Delete Business Error:", e)
+
+        return {
+            "message": "Failed to delete business"
+        }
 
 # ==========================
 # DELETE KNOWLEDGE

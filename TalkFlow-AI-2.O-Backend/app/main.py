@@ -14,6 +14,7 @@ from app.admin.route import router as admin_router
 from app.admin.business_routes import router as business_router
 from app.business_ai.routes import router as business_ai_router
 from app.rag.routes import router as rag_router
+from app.actions.routes import router as action_router
 
 load_dotenv()
 
@@ -51,6 +52,7 @@ app.include_router(admin_router)
 app.include_router(business_router)
 app.include_router(business_ai_router)
 app.include_router(rag_router)
+app.include_router(action_router)
 # app.include_router(admin_router, prefix="/admin", tags=["Admin"], dependencies=[Depends(get_current_user)])
 
 # Root route

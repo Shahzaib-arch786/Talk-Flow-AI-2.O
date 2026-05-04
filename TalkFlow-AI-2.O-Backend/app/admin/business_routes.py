@@ -57,7 +57,7 @@ def get_business(
 def delete(
     business_id: int,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user=Depends(get_current_user)
 ):
     return delete_business(
         db,
@@ -65,15 +65,5 @@ def delete(
         current_user
     )
 
-@router.delete("/{business_id}")
-def delete(
-    business_id: int,
-    db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
-):
-    return delete_business(
-        db,
-        business_id,
-        current_user
-    )
+
 

@@ -1,5 +1,7 @@
 class ConversationState:
     def __init__(self):
+        self.message = []
+        self.pending_action = None   # NEW
         self.history = []
 
     def add_user_message(self, text):

@@ -7,6 +7,7 @@ export default function Sidebar({ open, onClose }) {
     { name: "Dashboard", icon: LayoutDashboard, active: true, path: "/admin/dashboard" },
     { name: "My Business", icon: BarChart2, path: "/admin/my-business" },
     { name: "Knowledge Base", icon: BarChart2, path: "/admin/knowledge" },
+    { name: "Automation", icon: BarChart2, path: "/admin/automation" },
     { name: "Test AI", icon: BarChart2, path: "/admin/test-ai" },
     { name: "Call Logs", icon: Mic, path: "/admin/call-logs" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },

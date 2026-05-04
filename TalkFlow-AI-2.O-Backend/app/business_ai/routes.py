@@ -125,6 +125,11 @@ def text_stream(
         is_active=True
     ).first()
 
+    if not business:
+        return {
+            "response_text": "No business found"
+        }
+
     business_data = get_business_data(db, business.id)
 
     response_manager = BusinessResponseManager()
@@ -138,3 +143,23 @@ def text_stream(
             yield chunk
 
     return StreamingResponse(generator(), media_type="text/plain")
+
+#     response = response_manager.generate_response(
+#     {"intent": "general", "confidence": 0.9},
+#     data.text,
+#     state,
+#     business_data,
+#     db
+# )
+
+# # if response manager already returns dict
+#     if isinstance(response, dict):
+#         return response
+
+#     # if response manager returns plain string
+#     return {
+#         "response_text": response, 
+#         "intent": "general",
+#         "confidence": 0.9
+#     }
+    

@@ -1,23 +1,33 @@
 def build_business_context(business_data):
-    business = business_data["business"]
-    knowledge = business_data["knowledge"]
+    try:
+        if not business_data:
+            return "No business information available."
 
-    if not business:
-        return "No business information available."
+        # safely extract business
+        business = business_data.get("business", {})
+        knowledge = business_data.get("knowledge", [])
 
-    context = f"""
+        context = f"""
 Business Name: {business.get("name", "")}
 
 Description:
 {business.get("description", "")}
 
+Language:
+{business.get("language", "English")}
+
 Knowledge Base:
 """
 
-    for item in knowledge:
-        context += f"""
+        # FAQs
+        for item in knowledge:
+            context += f"""
 Q: {item.get("question", "")}
 A: {item.get("answer", "")}
 """
 
-    return context
+        return context
+
+    except Exception as e:
+        print("Context Builder Error:", e)
+        return "Business context unavailable."

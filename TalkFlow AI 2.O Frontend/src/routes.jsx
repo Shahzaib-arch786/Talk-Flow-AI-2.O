@@ -18,6 +18,7 @@ import KnowledgeBasePage from "./panels/admin/pages/KnowledgeBasePage";
 import TestAIPage from "./panels/admin/pages/TestAIPage";
 import CallLogs from "./panels/admin/pages/CallLogs";
 import Settings from "./panels/admin/pages/Settings";
+import AutomationPage from "./panels/admin/pages/AutomationPage";
 
 const AppRoutes = () => {
   return (
@@ -80,6 +81,10 @@ const AppRoutes = () => {
               <Settings />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/admin/automation"
+          element={<ProtectedRoute><AutomationPage /></ProtectedRoute>}
         />
         {/* 404 fallback */}
         <Route
