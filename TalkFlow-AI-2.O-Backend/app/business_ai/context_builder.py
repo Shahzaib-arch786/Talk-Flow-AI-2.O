@@ -1,18 +1,23 @@
 def build_business_context(business_data):
-
     business = business_data["business"]
     knowledge = business_data["knowledge"]
 
+    if not business:
+        return "No business information available."
+
     context = f"""
-Business Name: {business.name}
+Business Name: {business.get("name", "")}
 
 Description:
-{business.description}
+{business.get("description", "")}
 
 Knowledge Base:
 """
 
     for item in knowledge:
-        context += f"\nQ: {item.question}\nA: {item.answer}"
+        context += f"""
+Q: {item.get("question", "")}
+A: {item.get("answer", "")}
+"""
 
     return context

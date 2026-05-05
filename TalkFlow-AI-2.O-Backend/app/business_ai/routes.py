@@ -98,7 +98,8 @@ def text_ai(
         {"intent": "general", "confidence": 0.9},
         data.get("text"),
         state,
-        business_data
+        business_data,
+        db
     )
 
     return {

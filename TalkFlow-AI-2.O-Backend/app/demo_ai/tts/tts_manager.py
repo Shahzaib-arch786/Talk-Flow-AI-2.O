@@ -18,7 +18,8 @@ class TextToSpeech:
         )
 
         # Choose your voice ID
-        self.voice_id = "EXAVITQu4vr4xnSDxMaL"  
+        self.voice_id = "inGcvmoPgbvKUk9uCvHu" 
+        self.voice_id = "" 
         # replace later if you want another voice
 
     def generate_audio(self, text: str, session_id: str, lang="auto"):
